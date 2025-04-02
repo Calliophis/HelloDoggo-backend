@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Huan",
+    "sex": "male",
+    "breed": "Lévrier irlandais"
+  },
+  {
+    "id": 2,
+    "name": "Maya",
+    "sex": "female",
+    "breed": "Border collie"
+  },
+  {
+    "id": 3,
+    "name": "Momo-chan",
+    "sex": "female",
+    "breed": "Shiba Inu"
+  },
+  {
+    "id": 4,
+    "name": "Bella",
+    "sex": "female",
+    "breed": "Bouvier bernois"
+  },
+  {
+    "id": 5,
+    "name": "Beethoven",
+    "sex": "male",
+    "breed": "Saint-Bernard"
+  },
+  {
+    "id": 6,
+    "name": "Lassie",
+    "sex": "female",
+    "breed": "Colley"
+  },
+  {
+    "id": 7,
+    "name": "Balto",
+    "sex": "male",
+    "breed": "Husky"
+  },
+  {
+    "id": 8,
+    "name": "Hachiko",
+    "sex": "male",
+    "breed": "Akita Inu"
+  },
+  {
+    "id": 9,
+    "name": "Rintintin",
+    "sex": "male",
+    "breed": "Berger allemand"
+  },
+  {
+    "id": 10,
+    "name": "Laika",
+    "sex": "female",
+    "breed": "Jack Russell"
+  }
+]
