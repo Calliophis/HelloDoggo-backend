@@ -1,10 +1,11 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
-import { User } from '../user/user.model';
+import { Body, Controller, HttpCode, HttpStatus, Post, UnauthorizedException } from '@nestjs/common';
 import { DbService } from 'src/shared/database/db.service';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
-import { Public } from './publicDecorator';
+import { Public } from './decorators/public.decorator';
+import { SignupDto } from './dto/signup.dto';
+import { LoginDto } from './dto/login.dto';
 
+@Public()
 @Controller('auth')
 export class AuthController {
 
@@ -16,22 +17,22 @@ export class AuthController {
         this.dbService = new DbService('usersDB.json');
     }
     
-    @Public()
     @Post('signup')
-    signup(@Body() user: User ) {
-        return this.authService.signup(user.email, user.password);
+    async signup(@Body() user: SignupDto ) {
+        try {
+            return await this.authService.signup(user.email, user.password);
+        } catch {
+            throw new UnauthorizedException('This email is already used');
+        }
     }
 
-    @Public()
     @Post('login')
     @HttpCode(HttpStatus.OK)
-    login(@Body() user: User): Promise<{ access_token: string }> {
-        return this.authService.login(user.email, user.password);
-    }
-
-    @UseGuards(AuthGuard)
-    @Get('profile')
-    getProfiles(@Request() req) {
-        return req.user;
+    async login(@Body() user: LoginDto): Promise<{ access_token: string }> {
+        try {
+            return await this.authService.login(user.email, user.password);
+        } catch {
+            throw new UnauthorizedException('Incorrect email or password');
+        }
     }
 }
