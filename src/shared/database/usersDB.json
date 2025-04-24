@@ -1,12 +1,20 @@
 [
     {
         "id": 1,
-        "email": "test@test.test",
-        "password": "password"
+        "email": "admin@hellodoggo.com",
+        "password": "$2b$10$3C.DpAlVOsblCmn7oD8i0eAjOfjN9mGML1ZgBxY1SYPXmBVvwuI1C",
+        "role": "admin"
     },
     {
         "id": 2,
-        "email": "test2@test.test",
-        "password": "password2"
+        "email": "volunteer@doggorescue.com",
+        "password": "$2b$10$scsC5cjjMYFQ7XVHV0jgS.KzG.aCSFdGXjujlwcnOcQiQeQtW6fCe",
+        "role": "editor"
+    },
+    {
+        "id": 3,
+        "email": "user@randomemail.com",
+        "password": "$2b$10$Vx8oL2U7L7sgwGhvndqnDeBh.EmSAYaSMz62IVnDzyFRNTgExSm9.",
+        "role": "user" 
     }
 ]
