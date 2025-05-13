@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Huan",
     "sex": "male",
-    "breed": "Lévrier irlandais"
+    "breed": "Irish wolfhound"
   },
   {
     "id": 2,
@@ -21,19 +21,19 @@
     "id": 4,
     "name": "Bella",
     "sex": "female",
-    "breed": "Bouvier bernois"
+    "breed": "Bernese Mountain Dog"
   },
   {
     "id": 5,
     "name": "Beethoven",
     "sex": "male",
-    "breed": "Saint-Bernard"
+    "breed": "Saint Bernard"
   },
   {
     "id": 6,
     "name": "Lassie",
     "sex": "female",
-    "breed": "Colley"
+    "breed": "Rough Collie"
   },
   {
     "id": 7,
@@ -51,12 +51,12 @@
     "id": 9,
     "name": "Rintintin",
     "sex": "male",
-    "breed": "Berger allemand"
+    "breed": "German Shepherd"
   },
   {
     "id": 10,
     "name": "Laika",
     "sex": "female",
-    "breed": "Jack Russell"
+    "breed": "Jack Russell Terrier"
   }
 ]

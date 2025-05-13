@@ -55,7 +55,7 @@ export class UserController {
   @Roles(Role.ADMIN, Role.EDITOR, Role.USER)
   @Patch('me')
   async updateOwnProfile(@Request() req, @Body() updatedUser: UpdateUserDto) {
-    const allowedFields = ['email', 'password'];
+    const allowedFields = ['firstName', 'lastName', 'email', 'password'];
     try {
       const filteredUpdate = await this.authService.filterUpdate(updatedUser, allowedFields);
       return this.dbService.update(req.user.sub, filteredUpdate);

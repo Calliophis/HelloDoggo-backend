@@ -64,7 +64,12 @@ export class DbService {
     if (index === -1) {
       throw new NotFoundException(`Item with id ${id} not found`);
     }
-    data[index] = { ...data[index], ...updatedItem };
+    data[index] = { 
+      ...data[index], 
+      ...Object.fromEntries(
+        Object.entries(updatedItem).filter(([_, value]) => value !== undefined)
+      ) 
+    };
     this.writeDbFile(data);
     return data[index];
   }

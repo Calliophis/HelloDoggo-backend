@@ -20,7 +20,7 @@ export class AuthController {
     @Post('signup')
     async signup(@Body() user: SignupDto ) {
         try {
-            return await this.authService.signup(user.email, user.password);
+            return await this.authService.signup(user.firstName, user.lastName, user.email, user.password);
         } catch {
             throw new UnauthorizedException('This email is already used');
         }

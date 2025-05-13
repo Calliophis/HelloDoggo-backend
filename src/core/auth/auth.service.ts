@@ -22,7 +22,7 @@ export class AuthService {
         return hash;
     }
 
-    async signup(email: string, password: string) {
+    async signup(firstName: string, lastName: string, email: string, password: string) {
         
         const existingUser = this.dbService.findByEmail(email);
         
@@ -30,7 +30,7 @@ export class AuthService {
             throw new Error('This email is already used');
         } else {
             const hash = await this.hashPassword(password);
-            return this.dbService.create({email, password: hash, role: 'user'});
+            return this.dbService.create({firstName, lastName, email, password: hash, role: 'user'});
         }
     }
 
@@ -73,7 +73,8 @@ export class AuthService {
 
     async filterUpdate(updatedUser, allowedFields) {
         const filteredUpdate = Object.fromEntries(
-            Object.entries(updatedUser).filter(([key]) => allowedFields.includes(key))
+            Object.entries(updatedUser).filter(
+                ([key, value]) => allowedFields.includes(key) && value !== undefined)
         );
         
         if (!Object.keys(filteredUpdate).length) {
