@@ -10,11 +10,7 @@ export class DbService {
 
   constructor(path: string) {
     this.dbFilePath = join(process.cwd(), `src/shared/database/${path}`);
-    this.distDbFilePath = join(__dirname, '..', path);
-
-    if(!existsSync(this.distDbFilePath)) {
-      copyFileSync(this.dbFilePath, this.distDbFilePath);
-    }
+    this.distDbFilePath = this.dbFilePath;
   }
 
   private readDbFile<T>(): T[] {

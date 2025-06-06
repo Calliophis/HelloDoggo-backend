@@ -12,4 +12,12 @@ export class UpdateDogDto {
     @IsString()
     @IsOptional()
     breed?: string;
+
+    @IsString()
+    @IsOptional()
+    img_url?: string;
+
+    @IsString()
+    @IsOptional()
+    description?: string;
 }

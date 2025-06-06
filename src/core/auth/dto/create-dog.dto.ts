@@ -9,4 +9,10 @@ export class CreateDogDto {
 
     @IsString()
     breed: string;
+
+    @IsString()
+    img_url: string;
+
+    @IsString()
+    description: string;
 }
