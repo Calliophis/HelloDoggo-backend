@@ -9,9 +9,7 @@ import { AppService } from './app.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ 
-      isGlobal: true,
-      envFilePath: 'development.env' }),
+    ConfigModule.forRoot({ isGlobal: true }),
       JwtModule.registerAsync({
                   inject: [ConfigService],
                   useFactory: (configService: ConfigService) => ({

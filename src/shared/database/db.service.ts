@@ -1,5 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
-import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { Identifiable } from '../models/identifiable.model';
 import { User } from 'src/core/user/user.model';

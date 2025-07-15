@@ -9,6 +9,7 @@ import { CreateDogDto } from '../auth/dto/create-dog.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import * as fs from 'fs';
 
 @Controller('dog')
 export class DogController {
@@ -36,15 +37,15 @@ export class DogController {
     
     @UseGuards(RolesGuard)
     @Roles(Role.ADMIN, Role.EDITOR)
-    @Post('upload')
+    @Post('create')
     @UseInterceptors(
       FileInterceptor('image', {
         storage: diskStorage({
           destination: './uploads',
-          filename: (req, file, callback) => {
+          filename: (request, file, callback) => {
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
-            const ext = extname(file.originalname);
-            callback(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+            const fileExtension = extname(file.originalname);
+            callback(null, `${file.fieldname}-${uniqueSuffix}${fileExtension}`);
           },
         }),
       }),
@@ -55,14 +56,41 @@ export class DogController {
         ...body,
         img_url: imageUrl
       };
-      return this.dbService.create(newDog);
+      return this.dbService.create<Dog>(newDog);
     }
     
     @UseGuards(RolesGuard)
     @Roles(Role.ADMIN, Role.EDITOR)
+    @Patch(':id/image')
+    @UseInterceptors(
+      FileInterceptor('image', {
+        storage: diskStorage({
+          destination: './uploads',
+          filename: (request, file, callback) => {
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
+            const fileExtension = extname(file.originalname);
+            callback(null, `${file.fieldname}-${uniqueSuffix}${fileExtension}`);
+          },
+        }),
+      }),
+    )
+    updateDogImage(@UploadedFile() file: Express.Multer.File, @Param('id') id: string): Dog {
+      const existingUrl = this.dbService.findById<Dog>(+id)?.img_url;
+      if (existingUrl) {
+        fs.unlink(`./${existingUrl}`, (error) => {
+          if (error) throw error;
+        }) 
+      }
+      const imageUrl = `/uploads/${file.filename}`;
+      const updatedImage = {img_url: imageUrl}
+      return this.dbService.update<Dog>(+id, updatedImage);
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.ADMIN, Role.EDITOR)
     @Patch(':id')
     update(@Param('id') id: string, @Body() updatedDog: Partial<Dog>) {
-      return this.dbService.update(+id, updatedDog);
+      return this.dbService.update<Dog>(+id, updatedDog);
     }
     
     @UseGuards(RolesGuard)

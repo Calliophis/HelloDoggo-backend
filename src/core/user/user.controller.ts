@@ -54,11 +54,11 @@ export class UserController {
 
   @Roles(Role.ADMIN, Role.EDITOR, Role.USER)
   @Patch('me')
-  async updateOwnProfile(@Request() req, @Body() updatedUser: UpdateUserDto) {
+  async updateOwnProfile(@Request() request, @Body() updatedUser: UpdateUserDto) {
     const allowedFields = ['firstName', 'lastName', 'email', 'password'];
     try {
       const filteredUpdate = await this.authService.filterUpdate(updatedUser, allowedFields);
-      return this.dbService.update(req.user.sub, filteredUpdate);
+      return this.dbService.update(request.user.sub, filteredUpdate);
     } catch {
       throw new UnauthorizedException('This operation is not allowed');
     }

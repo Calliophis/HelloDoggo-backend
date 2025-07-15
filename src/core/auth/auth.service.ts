@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Request } from "express";
+import { Role } from './enums/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -34,7 +35,7 @@ export class AuthService {
         }
     }
 
-    async login(email: string, password: string): Promise<{ access_token: string }> {
+    async login(email: string, password: string): Promise<{ access_token: string, role: Role }> {
         
         const existingUser = this.dbService.findByEmail(email);
         
@@ -49,7 +50,7 @@ export class AuthService {
         
         const payload = { sub: existingUser.id, email: existingUser.email, role: existingUser.role }
         const secret = this.configService.get<string>('JWT_SECRET');
-        return { access_token: this.jwtService.sign(payload, { secret }) };
+        return { access_token: this.jwtService.sign(payload, { secret }), role: existingUser.role };
     }
 
     extractTokenFromHeader(request: Request): string | undefined {
