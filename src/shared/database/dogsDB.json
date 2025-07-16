@@ -3,44 +3,28 @@
     "id": 1,
     "name": "Basil",
     "sex": "male",
-    "breed": "Labrador retriever",
-    "description": "Am such a happy pupper",
+    "breed": "Golden retriever",
+    "description": "Such a happy pupper",
     "img_url": "/uploads/dog-puppy-on-garden-royalty-free-image-1586966191.jpg"
   },
   {
     "id": 2,
-    "name": "Huan",
+    "name": "Nacho",
     "sex": "male",
-    "breed": "Irish wolfhound",
-    "description": "He protec, he attac, but most importantly he wants snac",
-    "img_url": "/uploads/irish-wolfhound-2.jpg"
+    "breed": "Chihuahua",
+    "description": "Dangerous pupperino",
+    "img_url": "/uploads/image-1749204185227-842448019.jpg"
   },
   {
     "id": 3,
-    "name": "Maya",
-    "sex": "female",
-    "breed": "Border collie",
-    "description": "I am speed",
-    "img_url": "/uploads/119_contenu2_f975157500_896STa_Jih.jpg"
+    "name": "Rintintin",
+    "sex": "male",
+    "breed": "German Shepherd",
+    "description": "Will calm you when you're stressed out. Will stress you out when you're calm",
+    "img_url": "/uploads/Mabel-the-German-Shepherd.jpg"
   },
   {
     "id": 4,
-    "name": "Momo-chan",
-    "sex": "female",
-    "breed": "Shiba Inu",
-    "description": "If not fren, why fren shaped?",
-    "img_url": "/uploads/shiba-inu-alimentation-conseils.jpg"
-  },
-  {
-    "id": 5,
-    "name": "Bella",
-    "sex": "female",
-    "breed": "Bernese Mountain Dog",
-    "description": "Boop the snoot of this beautiful boofer",
-    "img_url": "/uploads/e95c7365c4a9aedde6e6f4407581c7cec2ac8007-3024x3024.jpg"
-  },
-  {
-    "id": 6,
     "name": "Beethoven",
     "sex": "male",
     "breed": "Saint Bernard",
@@ -48,7 +32,7 @@
     "img_url": "/uploads/unnamed.jpg"
   },
   {
-    "id": 7,
+    "id": 5,
     "name": "Lassie",
     "sex": "female",
     "breed": "Rough Collie",
@@ -56,7 +40,7 @@
     "img_url": "/uploads/Collie-standing-in-a-field.jpg"
   },
   {
-    "id": 8,
+    "id": 6,
     "name": "Balto",
     "sex": "male",
     "breed": "Husky",
@@ -64,7 +48,7 @@
     "img_url": "/uploads/Husky-dog-barking-winter-snowy-background_travelarium.ph_Shutterstock.jpg"
   },
   {
-    "id": 9,
+    "id": 7,
     "name": "Hachiko",
     "sex": "male",
     "breed": "Akita Inu",
@@ -72,15 +56,7 @@
     "img_url": "/uploads/istockphoto-1491701329-612x612.jpg"
   },
   {
-    "id": 10,
-    "name": "Rintintin",
-    "sex": "male",
-    "breed": "German Shepherd",
-    "description": "Will calm u when ur stressed out. Will stress you out when ur calm",
-    "img_url": "/uploads/Mabel-the-German-Shepherd.jpg"
-  },
-  {
-    "id": 11,
+    "id": 8,
     "name": "Laika",
     "sex": "female",
     "breed": "Jack Russell Terrier",
@@ -88,11 +64,35 @@
     "img_url": "/uploads/202105jack-russell-terrier-harness.jpg"
   },
   {
-    "id": 12,
-    "name": "Nacho",
+    "id": 9,
+    "name": "Momo-chan",
+    "sex": "female",
+    "breed": "Shiba Inu",
+    "description": "If not fren, why fren shaped?",
+    "img_url": "/uploads/shiba-inu-alimentation-conseils.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Huan",
     "sex": "male",
-    "breed": "Chihuahua",
-    "description": "Dangerous pupperino",
-    "img_url": "/uploads/image-1749204185227-842448019.jpg"
+    "breed": "Irish wolfhound",
+    "description": "He protec, he attac, but most importantly he wants snac",
+    "img_url": "/uploads/irish-wolfhound-2.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Bella",
+    "sex": "female",
+    "breed": "Bernese Mountain Dog",
+    "description": "Boop the snoot of this beautiful boofer",
+    "img_url": "/uploads/e95c7365c4a9aedde6e6f4407581c7cec2ac8007-3024x3024.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Maya",
+    "sex": "female",
+    "breed": "Border collie",
+    "description": "I am speed",
+    "img_url": "/uploads/119_contenu2_f975157500_896STa_Jih.jpg"
   }
 ]

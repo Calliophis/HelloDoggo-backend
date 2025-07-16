@@ -63,12 +63,8 @@ export class AuthService {
         if (!token) {
             throw new Error('No token');
         }
-        const payload = await this.jwtService.verifyAsync(
-            token,
-            {
-                secret: this.configService.get<string>('JWT_SECRET')
-            }
-        );
+        
+        const payload = await this.jwtService.verifyAsync(token);
         request['user'] = payload;
     }
 
@@ -79,7 +75,7 @@ export class AuthService {
         );
         
         if (!Object.keys(filteredUpdate).length) {
-        throw new Error();
+            throw new Error();
         }
         
         if (typeof filteredUpdate.password === 'string') {
