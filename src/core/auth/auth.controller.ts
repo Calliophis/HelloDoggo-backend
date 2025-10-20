@@ -28,7 +28,7 @@ export class AuthController {
 
     @Post('login')
     @HttpCode(HttpStatus.OK)
-    async login(@Body() user: LoginDto): Promise<{ access_token: string }> {
+    async login(@Body() user: LoginDto): Promise<{ accessToken: string }> {
         try {
             return await this.authService.login(user.email, user.password);
         } catch {

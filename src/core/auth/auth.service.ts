@@ -35,7 +35,7 @@ export class AuthService {
         }
     }
 
-    async login(email: string, password: string): Promise<{ access_token: string, role: Role }> {
+    async login(email: string, password: string): Promise<{ accessToken: string, role: Role }> {
         
         const existingUser = this.dbService.findByEmail(email);
         
@@ -50,7 +50,7 @@ export class AuthService {
         
         const payload = { sub: existingUser.id, email: existingUser.email, role: existingUser.role }
         const secret = this.configService.get<string>('JWT_SECRET');
-        return { access_token: this.jwtService.sign(payload, { secret }), role: existingUser.role };
+        return { accessToken: this.jwtService.sign(payload, { secret }), role: existingUser.role };
     }
 
     extractTokenFromHeader(request: Request): string | undefined {
