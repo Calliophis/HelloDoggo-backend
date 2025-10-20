@@ -2,8 +2,8 @@ import { Body, Controller, HttpCode, HttpStatus, Post, UnauthorizedException } f
 import { DbService } from 'src/shared/database/db.service';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
-import { SignupDto } from './dto/signup.dto';
-import { LoginDto } from './dto/login.dto';
+import { SignupDto } from '../../shared/dto/signup.dto';
+import { LoginDto } from '../../shared/dto/login.dto';
 
 @Public()
 @Controller('auth')

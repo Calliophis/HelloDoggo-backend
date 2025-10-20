@@ -5,7 +5,8 @@ import { Role } from '../auth/enums/role.enum';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { AuthService } from '../auth/auth.service';
-import { UpdateUserDto } from '../auth/dto/update-user.dto';
+import { UpdateUserDto } from '../../shared/dto/update-user.dto';
+import { PaginationDto } from 'src/shared/dto/pagination.dto';
 
 @UseGuards(RolesGuard)
 @Controller('user')
@@ -18,8 +19,10 @@ export class UserController {
   
   @Roles(Role.ADMIN)
   @Get('all')
-  findAll(): User[] {
-    return this.dbService.findAll();
+  findAll(@Query() paginationDto: PaginationDto): { paginatedItems: User[], totalNumberOfItems: number } {
+    const paginatedItems = this.dbService.findAll<User>(paginationDto).paginatedItems;
+    const totalNumberOfItems = this.dbService.findAll<User>(paginationDto).totalNumberOfItems;
+    return { paginatedItems, totalNumberOfItems };
   }
 
   @Roles(Role.ADMIN, Role.EDITOR, Role.USER)

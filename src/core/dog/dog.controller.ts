@@ -1,15 +1,16 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Dog } from './dog.model';
 import { DbService } from 'src/shared/database/db.service';
 import { Public } from '../auth/decorators/public.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Role } from '../auth/enums/role.enum';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { CreateDogDto } from '../auth/dto/create-dog.dto';
+import { CreateDogDto } from '../../shared/dto/create-dog.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import * as fs from 'fs';
+import { PaginationDto } from 'src/shared/dto/pagination.dto';
 
 @Controller('dog')
 export class DogController {
@@ -21,8 +22,10 @@ export class DogController {
 
     @Public()
     @Get('all')
-    findAll(): Dog[] {
-      return this.dbService.findAll();
+    findAll(@Query() paginationDto: PaginationDto): { paginatedItems: Dog[], totalNumberOfItems: number } {
+      const paginatedItems = this.dbService.findAll<Dog>(paginationDto).paginatedItems;
+      const totalNumberOfItems = this.dbService.findAll<Dog>(paginationDto).totalNumberOfItems;
+      return { paginatedItems, totalNumberOfItems };
     }
     
     @Public()

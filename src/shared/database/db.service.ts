@@ -3,6 +3,8 @@ import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { Identifiable } from '../models/identifiable.model';
 import { User } from 'src/core/user/user.model';
+import { PaginationDto } from '../dto/pagination.dto';
+import { DEFAULT_PAGE_SIZE } from '../constants';
 
 export class DbService {
   private readonly dbFilePath: string;
@@ -22,8 +24,31 @@ export class DbService {
     writeFileSync(this.distDbFilePath, JSON.stringify(data, null, 2));
   }
 
-  findAll<T>(): T[] {
-    return this.readDbFile<T>();
+  private paginateData<T>(data: T[], paginationDto: PaginationDto): T[] {
+    const paginatedData: T[] = [];
+    const skip = (paginationDto.page-1)*paginationDto.elementsPerPage;
+    const limit = paginationDto.elementsPerPage;
+    let paginatedLength = (skip ?? 0) + (limit ?? DEFAULT_PAGE_SIZE);
+    
+    if (paginatedLength > data.length) {
+      paginatedLength = data.length
+    } 
+
+    if (skip > data.length) {
+      throw new Error();
+    }
+    
+    for (let index = skip ?? 0; index < paginatedLength; index++) {
+      paginatedData.push(data[index]);
+    }
+    return paginatedData;
+  }
+
+  findAll<T>(paginationDto: PaginationDto): { paginatedItems: T[], totalNumberOfItems: number } {
+    const fullData = this.readDbFile<T>();
+    const paginatedItems = this.paginateData(fullData, paginationDto);
+    const totalNumberOfItems = fullData.length;
+    return { paginatedItems, totalNumberOfItems };
   }
 
   findById<T extends Identifiable>(id: number): T | undefined {
