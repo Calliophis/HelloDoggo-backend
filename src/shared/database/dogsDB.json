@@ -94,5 +94,69 @@
     "breed": "Border collie",
     "description": "I am speed",
     "img_url": "/uploads/119_contenu2_f975157500_896STa_Jih.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Tiny McBorkface",
+    "sex": "male",
+    "breed": "Boston Terrier",
+    "description": "He smol, he bork, but also he big heart",
+    "img_url": "/uploads/image-1756984420130-834811322.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Lady Snootleton",
+    "sex": "female",
+    "breed": "Dachshund",
+    "description": "Long snoot for boops, short legs for derps",
+    "img_url": "/uploads/image-1756984753540-833879349.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Lord Chewbert",
+    "sex": "male",
+    "breed": "Great Dane",
+    "description": "Majestic pupper, destroyer of shoes",
+    "img_url": "/uploads/image-1756985051561-108217133.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Queen Floofina",
+    "sex": "female",
+    "breed": "Samoyede",
+    "description": "Floof level: over 9000",
+    "img_url": "/uploads/image-1756985285900-370154686.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Chongus Maximus",
+    "sex": "male",
+    "breed": "Basset Hound",
+    "description": "He chonk, he honk, but still fast as blonk",
+    "img_url": "/uploads/image-1756985473538-386509556.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Detective Snackies",
+    "sex": "female",
+    "breed": "Beagle",
+    "description": "Tail wag machine, treat detection 100% accurate",
+    "img_url": "/uploads/image-1756985705460-888715848.png"
+  },
+  {
+    "id": 19,
+    "name": "Captain Snugglepaws",
+    "sex": "female",
+    "breed": "Mixed",
+    "description": "Zoomies at 3AM, cuddles at 3:01AM",
+    "img_url": "/uploads/image-1756985758078-684568904.jpg"
+  },
+  {
+    "id": 20,
+    "name": "Sir Fluffington",
+    "sex": "male",
+    "breed": "Afghan Hound",
+    "description": "Such fluff, much wow, very zoom, wow",
+    "img_url": "/uploads/image-1756985817175-156485843.jpg"
   }
 ]
