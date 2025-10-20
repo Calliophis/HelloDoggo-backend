@@ -6,15 +6,15 @@ export class Dog extends Identifiable {
   sex: 'male' | 'female';
   breed: string;
   description: string;
-  img_url: string | undefined;
+  imgUrl: string | undefined;
 
-  constructor(id: number, name: string, sex: 'male'|'female', breed: string, img_url: string, description: string) {
+  constructor(id: number, name: string, sex: 'male'|'female', breed: string, imgUrl: string, description: string) {
     super(id);
     
     this.name = name;
     this.sex = sex;
     this.breed = breed;
     this.description = description;
-    this.img_url = img_url;
+    this.imgUrl = imgUrl;
   }
 }

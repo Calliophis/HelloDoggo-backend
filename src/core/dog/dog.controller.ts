@@ -53,11 +53,11 @@ export class DogController {
         }),
       }),
     )
-    create(@UploadedFile() file: Express.Multer.File, @Body() body: Omit<CreateDogDto, 'img_url'>): Dog {
+    create(@UploadedFile() file: Express.Multer.File, @Body() body: Omit<CreateDogDto, 'imgUrl'>): Dog {
       const imageUrl = `/uploads/${file.filename}`;
       const newDog = {
         ...body,
-        img_url: imageUrl
+        imgUrl: imageUrl
       };
       return this.dbService.create<Dog>(newDog);
     }
@@ -78,14 +78,14 @@ export class DogController {
       }),
     )
     updateDogImage(@UploadedFile() file: Express.Multer.File, @Param('id') id: string): Dog {
-      const existingUrl = this.dbService.findById<Dog>(+id)?.img_url;
+      const existingUrl = this.dbService.findById<Dog>(+id)?.imgUrl;
       if (existingUrl) {
         fs.unlink(`./${existingUrl}`, (error) => {
           if (error) throw error;
         }) 
       }
       const imageUrl = `/uploads/${file.filename}`;
-      const updatedImage = {img_url: imageUrl}
+      const updatedImage = {imgUrl: imageUrl}
       return this.dbService.update<Dog>(+id, updatedImage);
     }
 

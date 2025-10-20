@@ -15,7 +15,7 @@ export class UpdateDogDto {
 
     @IsString()
     @IsOptional()
-    img_url?: string;
+    imgUrl?: string;
 
     @IsString()
     @IsOptional()

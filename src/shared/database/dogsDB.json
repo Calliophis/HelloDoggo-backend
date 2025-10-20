@@ -5,7 +5,7 @@
     "sex": "male",
     "breed": "Golden retriever",
     "description": "Such a happy pupper",
-    "img_url": "/uploads/dog-puppy-on-garden-royalty-free-image-1586966191.jpg"
+    "imgUrl": "/uploads/dog-puppy-on-garden-royalty-free-image-1586966191.jpg"
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@
     "sex": "male",
     "breed": "Chihuahua",
     "description": "Dangerous pupperino",
-    "img_url": "/uploads/image-1749204185227-842448019.jpg"
+    "imgUrl": "/uploads/image-1749204185227-842448019.jpg"
   },
   {
     "id": 3,
@@ -21,7 +21,7 @@
     "sex": "male",
     "breed": "German Shepherd",
     "description": "Will calm you when you're stressed out. Will stress you out when you're calm",
-    "img_url": "/uploads/Mabel-the-German-Shepherd.jpg"
+    "imgUrl": "/uploads/Mabel-the-German-Shepherd.jpg"
   },
   {
     "id": 4,
@@ -29,7 +29,7 @@
     "sex": "male",
     "breed": "Saint Bernard",
     "description": "I love chimkin and treatos",
-    "img_url": "/uploads/unnamed.jpg"
+    "imgUrl": "/uploads/unnamed.jpg"
   },
   {
     "id": 5,
@@ -37,7 +37,7 @@
     "sex": "female",
     "breed": "Rough Collie",
     "description": "Lovely long-haired girl lookin for kiddos to play with",
-    "img_url": "/uploads/Collie-standing-in-a-field.jpg"
+    "imgUrl": "/uploads/Collie-standing-in-a-field.jpg"
   },
   {
     "id": 6,
@@ -45,7 +45,7 @@
     "sex": "male",
     "breed": "Husky",
     "description": "Singing the song of my people",
-    "img_url": "/uploads/Husky-dog-barking-winter-snowy-background_travelarium.ph_Shutterstock.jpg"
+    "imgUrl": "/uploads/Husky-dog-barking-winter-snowy-background_travelarium.ph_Shutterstock.jpg"
   },
   {
     "id": 7,
@@ -53,7 +53,7 @@
     "sex": "male",
     "breed": "Akita Inu",
     "description": "I'll wait for my hooman",
-    "img_url": "/uploads/istockphoto-1491701329-612x612.jpg"
+    "imgUrl": "/uploads/istockphoto-1491701329-612x612.jpg"
   },
   {
     "id": 8,
@@ -61,7 +61,7 @@
     "sex": "female",
     "breed": "Jack Russell Terrier",
     "description": "Love you to the moon",
-    "img_url": "/uploads/202105jack-russell-terrier-harness.jpg"
+    "imgUrl": "/uploads/202105jack-russell-terrier-harness.jpg"
   },
   {
     "id": 9,
@@ -69,7 +69,7 @@
     "sex": "female",
     "breed": "Shiba Inu",
     "description": "If not fren, why fren shaped?",
-    "img_url": "/uploads/shiba-inu-alimentation-conseils.jpg"
+    "imgUrl": "/uploads/shiba-inu-alimentation-conseils.jpg"
   },
   {
     "id": 10,
@@ -77,7 +77,7 @@
     "sex": "male",
     "breed": "Irish wolfhound",
     "description": "He protec, he attac, but most importantly he wants snac",
-    "img_url": "/uploads/irish-wolfhound-2.jpg"
+    "imgUrl": "/uploads/irish-wolfhound-2.jpg"
   },
   {
     "id": 11,
@@ -85,7 +85,7 @@
     "sex": "female",
     "breed": "Bernese Mountain Dog",
     "description": "Boop the snoot of this beautiful boofer",
-    "img_url": "/uploads/e95c7365c4a9aedde6e6f4407581c7cec2ac8007-3024x3024.jpg"
+    "imgUrl": "/uploads/e95c7365c4a9aedde6e6f4407581c7cec2ac8007-3024x3024.jpg"
   },
   {
     "id": 12,
@@ -93,7 +93,7 @@
     "sex": "female",
     "breed": "Border collie",
     "description": "I am speed",
-    "img_url": "/uploads/119_contenu2_f975157500_896STa_Jih.jpg"
+    "imgUrl": "/uploads/119_contenu2_f975157500_896STa_Jih.jpg"
   },
   {
     "id": 13,
@@ -101,7 +101,7 @@
     "sex": "male",
     "breed": "Boston Terrier",
     "description": "He smol, he bork, but also he big heart",
-    "img_url": "/uploads/image-1756984420130-834811322.jpg"
+    "imgUrl": "/uploads/image-1756984420130-834811322.jpg"
   },
   {
     "id": 14,
@@ -109,7 +109,7 @@
     "sex": "female",
     "breed": "Dachshund",
     "description": "Long snoot for boops, short legs for derps",
-    "img_url": "/uploads/image-1756984753540-833879349.jpg"
+    "imgUrl": "/uploads/image-1756984753540-833879349.jpg"
   },
   {
     "id": 15,
@@ -117,7 +117,7 @@
     "sex": "male",
     "breed": "Great Dane",
     "description": "Majestic pupper, destroyer of shoes",
-    "img_url": "/uploads/image-1756985051561-108217133.jpg"
+    "imgUrl": "/uploads/image-1756985051561-108217133.jpg"
   },
   {
     "id": 16,
@@ -125,7 +125,7 @@
     "sex": "female",
     "breed": "Samoyede",
     "description": "Floof level: over 9000",
-    "img_url": "/uploads/image-1756985285900-370154686.jpg"
+    "imgUrl": "/uploads/image-1756985285900-370154686.jpg"
   },
   {
     "id": 17,
@@ -133,7 +133,7 @@
     "sex": "male",
     "breed": "Basset Hound",
     "description": "He chonk, he honk, but still fast as blonk",
-    "img_url": "/uploads/image-1756985473538-386509556.jpg"
+    "imgUrl": "/uploads/image-1756985473538-386509556.jpg"
   },
   {
     "id": 18,
@@ -141,7 +141,7 @@
     "sex": "female",
     "breed": "Beagle",
     "description": "Tail wag machine, treat detection 100% accurate",
-    "img_url": "/uploads/image-1756985705460-888715848.png"
+    "imgUrl": "/uploads/image-1756985705460-888715848.png"
   },
   {
     "id": 19,
@@ -149,7 +149,7 @@
     "sex": "female",
     "breed": "Mixed",
     "description": "Zoomies at 3AM, cuddles at 3:01AM",
-    "img_url": "/uploads/image-1756985758078-684568904.jpg"
+    "imgUrl": "/uploads/image-1756985758078-684568904.jpg"
   },
   {
     "id": 20,
@@ -157,6 +157,6 @@
     "sex": "male",
     "breed": "Afghan Hound",
     "description": "Such fluff, much wow, very zoom, wow",
-    "img_url": "/uploads/image-1756985817175-156485843.jpg"
+    "imgUrl": "/uploads/image-1756985817175-156485843.jpg"
   }
 ]
