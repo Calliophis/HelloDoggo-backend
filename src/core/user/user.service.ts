@@ -18,8 +18,8 @@ export class UserService {
         return JSON.parse(data) as User[];
     }
 
-    private writeDbFile<T>(data: T[]): void {
-        writeFileSync(this.distDbFilePath, JSON.stringify(data, null, 2));
+    private writeDbFile(users: User[]): void {
+        writeFileSync(this.distDbFilePath, JSON.stringify(users, null, 2));
     }
 
     findAll(paginationDto: PaginationDto): {
@@ -40,8 +40,8 @@ export class UserService {
 
     findById(id: number): User | undefined {
         const data = this.readDbFile();
-        const item = data.find((item) => item.id === id);
-        return item;
+        const user = data.find((user) => user.id === id);
+        return user;
     }
 
     generateId(): number {
@@ -53,16 +53,16 @@ export class UserService {
         const data = this.readDbFile();
         const newId = this.generateId();
     
-        const item = { id: newId, ...newUser };
+        const user = { id: newId, ...newUser };
     
-        data.push(item);
+        data.push(user);
         this.writeDbFile(data);
-        return item;
+        return user;
     }
 
     update(id: number, updatedUser: Partial<User>): User {
         const data = this.readDbFile();
-        const index = data.findIndex((item) => item.id === id);
+        const index = data.findIndex((user) => user.id === id);
         if (index === -1) {
           throw new NotFoundException(`Item with id ${id} not found`);
         }
@@ -78,17 +78,17 @@ export class UserService {
 
     delete(id: number): { deleted: boolean } {
         const data = this.readDbFile();
-        const index = data.findIndex((item) => item.id === id);
+        const index = data.findIndex((user) => user.id === id);
         if (index === -1) {
-          throw new NotFoundException(`Item with id ${id} not found`);
+          throw new NotFoundException(`User with id ${id} not found`);
         }
         data.splice(index, 1);
         this.writeDbFile(data);
         return { deleted: true };
     }
 
-    private paginateData<T>(data: T[], paginationDto: PaginationDto): T[] {
-        const paginatedData: T[] = [];
+    private paginateData(data: User[], paginationDto: PaginationDto): User[] {
+        const paginatedData: User[] = [];
         const skip = (paginationDto.page - 1) * paginationDto.elementsPerPage;
         const limit = paginationDto.elementsPerPage;
         let paginatedLength = (skip ?? 0) + (limit ?? DEFAULT_PAGE_SIZE);

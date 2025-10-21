@@ -35,16 +35,16 @@ export class UserController {
     totalNumberOfItems: number;
   } {
     const paginatedItems =
-      this.userService.findAll<User>(paginationDto).paginatedItems;
+      this.userService.findAll(paginationDto).paginatedItems;
     const totalNumberOfItems =
-      this.userService.findAll<User>(paginationDto).totalNumberOfItems;
+      this.userService.findAll(paginationDto).totalNumberOfItems;
     return { paginatedItems, totalNumberOfItems };
   }
 
   @Roles(Role.ADMIN, Role.EDITOR, Role.USER)
   @Get('me')
   getProfile(@Request() req: Request & { user: TokenPayload }): User {
-    const user = this.userService.findById<User>(req.user.sub);
+    const user = this.userService.findById(req.user.sub);
     if (user) {
       return user;
     }
@@ -64,7 +64,7 @@ export class UserController {
   @Roles(Role.ADMIN)
   @Get(':id')
   findById(@Param('id') id: string): User {
-    const user = this.userService.findById<User>(+id);
+    const user = this.userService.findById(+id);
     if (user) {
       return user;
     }

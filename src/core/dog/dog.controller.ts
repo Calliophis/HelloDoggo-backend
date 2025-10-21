@@ -38,16 +38,16 @@ export class DogController {
     totalNumberOfItems: number;
   } {
     const paginatedItems =
-      this.dogService.findAll<Dog>(paginationDto).paginatedItems;
+      this.dogService.findAll(paginationDto).paginatedItems;
     const totalNumberOfItems =
-      this.dogService.findAll<Dog>(paginationDto).totalNumberOfItems;
+      this.dogService.findAll(paginationDto).totalNumberOfItems;
     return { paginatedItems, totalNumberOfItems };
   }
 
   @Public()
   @Get(':id')
   findById(@Param('id') id: string): Dog {
-    const dog = this.dogService.findById<Dog>(+id);
+    const dog = this.dogService.findById(+id);
     if (dog) {
       return dog;
     }
@@ -79,7 +79,7 @@ export class DogController {
       ...body,
       imgUrl: imageUrl,
     };
-    return this.dogService.create<Dog>(newDog);
+    return this.dogService.create(newDog);
   }
 
   @UseGuards(RolesGuard)
@@ -102,7 +102,7 @@ export class DogController {
     @UploadedFile() file: Express.Multer.File,
     @Param('id') id: string,
   ): Dog {
-    const existingUrl = this.dogService.findById<Dog>(+id)?.imgUrl;
+    const existingUrl = this.dogService.findById(+id)?.imgUrl;
     if (existingUrl) {
       fs.unlink(`./${existingUrl}`, (error) => {
         if (error) throw error;
@@ -110,14 +110,14 @@ export class DogController {
     }
     const imageUrl = `/uploads/${file.filename}`;
     const updatedImage = { imgUrl: imageUrl };
-    return this.dogService.update<Dog>(+id, updatedImage);
+    return this.dogService.update(+id, updatedImage);
   }
 
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.EDITOR)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatedDog: Partial<Dog>) {
-    return this.dogService.update<Dog>(+id, updatedDog);
+    return this.dogService.update(+id, updatedDog);
   }
 
   @UseGuards(RolesGuard)

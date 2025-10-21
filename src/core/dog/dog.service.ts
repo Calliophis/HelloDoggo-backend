@@ -18,7 +18,7 @@ export class DogService {
         return JSON.parse(data) as Dog[];
     }
 
-    private writeDbFile<T>(data: T[]): void {
+    private writeDbFile(data: Dog[]): void {
         writeFileSync(this.distDbFilePath, JSON.stringify(data, null, 2));
     }
 
@@ -34,8 +34,8 @@ export class DogService {
 
     findById(id: number): Dog | undefined {
         const data = this.readDbFile();
-        const item = data.find((item) => item.id === id);
-        return item;
+        const dog = data.find((dog) => dog.id === id);
+        return dog;
     }
 
     generateId(): number {
@@ -47,16 +47,16 @@ export class DogService {
         const data = this.readDbFile();
         const newId = this.generateId();
     
-        const item = { id: newId, ...newDog };
+        const dog = { id: newId, ...newDog };
     
-        data.push(item);
+        data.push(dog);
         this.writeDbFile(data);
-        return item;
+        return dog;
     }
 
     update(id: number, updatedDog: Partial<Dog>): Dog {
         const data = this.readDbFile();
-        const index = data.findIndex((item) => item.id === id);
+        const index = data.findIndex((dog) => dog.id === id);
         if (index === -1) {
           throw new NotFoundException(`Item with id ${id} not found`);
         }
@@ -72,7 +72,7 @@ export class DogService {
 
     delete(id: number): { deleted: boolean } {
         const data = this.readDbFile();
-        const index = data.findIndex((item) => item.id === id);
+        const index = data.findIndex((dog) => dog.id === id);
         if (index === -1) {
           throw new NotFoundException(`Item with id ${id} not found`);
         }
@@ -81,8 +81,8 @@ export class DogService {
         return { deleted: true };
     }
 
-    private paginateData<T>(data: T[], paginationDto: PaginationDto): T[] {
-        const paginatedData: T[] = [];
+    private paginateData(data: Dog[], paginationDto: PaginationDto): Dog[] {
+        const paginatedData: Dog[] = [];
         const skip = (paginationDto.page - 1) * paginationDto.elementsPerPage;
         const limit = paginationDto.elementsPerPage;
         let paginatedLength = (skip ?? 0) + (limit ?? DEFAULT_PAGE_SIZE);
