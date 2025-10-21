@@ -6,12 +6,14 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const frontendUrl = process.env.FRONTEND_URL;
+
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
     prefix: '/uploads/',
   });
 
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: frontendUrl,
     allowedHeaders:
       'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization',
     methods: 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
