@@ -7,12 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { AppService } from './app.service';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    AuthModule
-  ],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), AuthModule],
   controllers: [AppController, DogController, UserController],
   providers: [AppService],
 })
 export class AppModule {}
-

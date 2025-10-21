@@ -19,32 +19,35 @@ export class DbService {
     const data = readFileSync(this.distDbFilePath, 'utf-8');
     return JSON.parse(data) as T[];
   }
- 
+
   private writeDbFile<T>(data: T[]): void {
     writeFileSync(this.distDbFilePath, JSON.stringify(data, null, 2));
   }
 
   private paginateData<T>(data: T[], paginationDto: PaginationDto): T[] {
     const paginatedData: T[] = [];
-    const skip = (paginationDto.page-1)*paginationDto.elementsPerPage;
+    const skip = (paginationDto.page - 1) * paginationDto.elementsPerPage;
     const limit = paginationDto.elementsPerPage;
     let paginatedLength = (skip ?? 0) + (limit ?? DEFAULT_PAGE_SIZE);
-    
+
     if (paginatedLength > data.length) {
-      paginatedLength = data.length
-    } 
+      paginatedLength = data.length;
+    }
 
     if (skip > data.length) {
       throw new Error();
     }
-    
+
     for (let index = skip ?? 0; index < paginatedLength; index++) {
       paginatedData.push(data[index]);
     }
     return paginatedData;
   }
 
-  findAll<T>(paginationDto: PaginationDto): { paginatedItems: T[], totalNumberOfItems: number } {
+  findAll<T>(paginationDto: PaginationDto): {
+    paginatedItems: T[];
+    totalNumberOfItems: number;
+  } {
     const fullData = this.readDbFile<T>();
     const paginatedItems = this.paginateData(fullData, paginationDto);
     const totalNumberOfItems = fullData.length;
@@ -65,15 +68,15 @@ export class DbService {
 
   generateId(): number {
     const data = this.readDbFile<Identifiable>();
-    return data.length+1;
+    return data.length + 1;
   }
 
   create<T extends Identifiable>(newItem: Omit<T, 'id'>): T {
     const data = this.readDbFile<T>();
     const newId = this.generateId();
 
-    const item = { id: newId, ...newItem} as T;
-    
+    const item = { id: newId, ...newItem } as T;
+
     data.push(item);
     this.writeDbFile<T>(data);
     return item;
@@ -85,11 +88,11 @@ export class DbService {
     if (index === -1) {
       throw new NotFoundException(`Item with id ${id} not found`);
     }
-    data[index] = { 
-      ...data[index], 
+    data[index] = {
+      ...data[index],
       ...Object.fromEntries(
-        Object.entries(updatedItem).filter(([_, value]) => value !== undefined)
-      ) 
+        Object.entries(updatedItem).filter(([value]) => value !== undefined),
+      ),
     };
     this.writeDbFile(data);
     return data[index];

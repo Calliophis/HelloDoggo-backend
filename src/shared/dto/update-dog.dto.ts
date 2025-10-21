@@ -1,23 +1,23 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsOptional, IsString } from 'class-validator';
 
 export class UpdateDogDto {
-    @IsString()
-    @IsOptional()
-    name?: string;
-    
-    @IsString()
-    @IsOptional()
-    sex?: 'male'|'female';
+  @IsString()
+  @IsOptional()
+  name?: string;
 
-    @IsString()
-    @IsOptional()
-    breed?: string;
+  @IsString()
+  @IsOptional()
+  sex?: 'male' | 'female';
 
-    @IsString()
-    @IsOptional()
-    imgUrl?: string;
+  @IsString()
+  @IsOptional()
+  breed?: string;
 
-    @IsString()
-    @IsOptional()
-    description?: string;
+  @IsString()
+  @IsOptional()
+  imgUrl?: string;
+
+  @IsString()
+  @IsOptional()
+  description?: string;
 }

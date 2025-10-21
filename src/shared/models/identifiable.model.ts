@@ -1,7 +1,7 @@
 export abstract class Identifiable {
-    id: number;
+  id: number;
 
-    constructor(id: number) {
-        this.id = id;
-    }
+  constructor(id: number) {
+    this.id = id;
+  }
 }

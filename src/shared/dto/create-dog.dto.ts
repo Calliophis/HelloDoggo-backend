@@ -1,18 +1,18 @@
-import { IsString } from "class-validator";
+import { IsString } from 'class-validator';
 
 export class CreateDogDto {
-    @IsString()
-    name: string;
-    
-    @IsString()
-    sex: 'male'|'female';
+  @IsString()
+  name: string;
 
-    @IsString()
-    breed: string;
+  @IsString()
+  sex: 'male' | 'female';
 
-    @IsString()
-    imgUrl: string;
+  @IsString()
+  breed: string;
 
-    @IsString()
-    description: string;
+  @IsString()
+  imgUrl: string;
+
+  @IsString()
+  description: string;
 }
