@@ -11,14 +11,14 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { DbService } from 'src/shared/database/db.service';
+import { DbService } from '../../shared/database/db.service';
 import { User } from './user.model';
 import { Role } from '../auth/enums/role.enum';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { AuthService, TokenPayload } from '../auth/auth.service';
 import { UpdateUserDto } from '../../shared/dto/update-user.dto';
-import { PaginationDto } from 'src/shared/dto/pagination.dto';
+import { PaginationDto } from '../../shared/dto/pagination.dto';
 
 @UseGuards(RolesGuard)
 @Controller('user')

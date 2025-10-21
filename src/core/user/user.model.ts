@@ -1,4 +1,4 @@
-import { Identifiable } from 'src/shared/models/identifiable.model';
+import { Identifiable } from '../../shared/models/identifiable.model';
 import { Role } from '../auth/enums/role.enum';
 
 export class User extends Identifiable {

@@ -1,4 +1,4 @@
-import { Identifiable } from 'src/shared/models/identifiable.model';
+import { Identifiable } from '../../shared/models/identifiable.model';
 
 export class Dog extends Identifiable {
   name: string;

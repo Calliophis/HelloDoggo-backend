@@ -6,11 +6,11 @@ import {
   Post,
   UnauthorizedException,
 } from '@nestjs/common';
-import { DbService } from 'src/shared/database/db.service';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { SignupDto } from '../../shared/dto/signup.dto';
 import { LoginDto } from '../../shared/dto/login.dto';
+import { DbService } from '../../shared/database/db.service';
 
 @Public()
 @Controller('auth')

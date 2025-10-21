@@ -2,7 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { Identifiable } from '../models/identifiable.model';
-import { User } from 'src/core/user/user.model';
+import { User } from '../../core/user/user.model';
 import { PaginationDto } from '../dto/pagination.dto';
 import { DEFAULT_PAGE_SIZE } from '../constants';
 
