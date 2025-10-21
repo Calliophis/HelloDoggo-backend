@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { DbService } from '../../shared/database/db.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { Role } from './enums/role.enum';
 import { User } from '../user/user.model';
+import { UserService } from '../user/user.service';
 
 export interface TokenPayload {
   sub: number;
@@ -15,14 +15,11 @@ export interface TokenPayload {
 
 @Injectable()
 export class AuthService {
-  private dbService: DbService;
-
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService,
-  ) {
-    this.dbService = new DbService('usersDB.json');
-  }
+    private userService: UserService
+  ) { }
 
   async hashPassword(password: string): Promise<string> {
     const hash = await bcrypt.hash(password, 10);
@@ -35,13 +32,13 @@ export class AuthService {
     email: string,
     password: string,
   ) {
-    const existingUser = this.dbService.findByEmail(email);
+    const existingUser = this.userService.findByEmail(email);
 
     if (existingUser) {
       throw new Error('This email is already used');
     } else {
       const hash = await this.hashPassword(password);
-      return this.dbService.create({
+      return this.userService.create({
         firstName,
         lastName,
         email,
@@ -55,7 +52,7 @@ export class AuthService {
     email: string,
     password: string,
   ): Promise<{ accessToken: string; role: Role }> {
-    const existingUser = this.dbService.findByEmail(email);
+    const existingUser = this.userService.findByEmail(email);
 
     if (!existingUser) {
       throw new Error('Incorrect email or password');

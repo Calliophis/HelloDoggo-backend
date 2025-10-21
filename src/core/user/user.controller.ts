@@ -11,7 +11,6 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { DbService } from '../../shared/database/db.service';
 import { User } from './user.model';
 import { Role } from '../auth/enums/role.enum';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -19,15 +18,15 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { AuthService, TokenPayload } from '../auth/auth.service';
 import { UpdateUserDto } from '../../shared/dto/update-user.dto';
 import { PaginationDto } from '../../shared/dto/pagination.dto';
+import { UserService } from './user.service';
 
 @UseGuards(RolesGuard)
 @Controller('user')
 export class UserController {
-  protected dbService: DbService;
-
-  constructor(private authService: AuthService) {
-    this.dbService = new DbService('usersDB.json');
-  }
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) { }
 
   @Roles(Role.ADMIN)
   @Get('all')
@@ -36,16 +35,16 @@ export class UserController {
     totalNumberOfItems: number;
   } {
     const paginatedItems =
-      this.dbService.findAll<User>(paginationDto).paginatedItems;
+      this.userService.findAll<User>(paginationDto).paginatedItems;
     const totalNumberOfItems =
-      this.dbService.findAll<User>(paginationDto).totalNumberOfItems;
+      this.userService.findAll<User>(paginationDto).totalNumberOfItems;
     return { paginatedItems, totalNumberOfItems };
   }
 
   @Roles(Role.ADMIN, Role.EDITOR, Role.USER)
   @Get('me')
   getProfile(@Request() req: Request & { user: TokenPayload }): User {
-    const user = this.dbService.findById<User>(req.user.sub);
+    const user = this.userService.findById<User>(req.user.sub);
     if (user) {
       return user;
     }
@@ -55,7 +54,7 @@ export class UserController {
   @Roles(Role.ADMIN)
   @Get()
   findByEmail(@Query('email') email: string): User {
-    const user = this.dbService.findByEmail(email);
+    const user = this.userService.findByEmail(email);
     if (user) {
       return user;
     }
@@ -65,7 +64,7 @@ export class UserController {
   @Roles(Role.ADMIN)
   @Get(':id')
   findById(@Param('id') id: string): User {
-    const user = this.dbService.findById<User>(+id);
+    const user = this.userService.findById<User>(+id);
     if (user) {
       return user;
     }
@@ -84,7 +83,7 @@ export class UserController {
         updatedUser,
         allowedFields,
       );
-      return this.dbService.update(request.user.sub, filteredUpdate);
+      return this.userService.update(request.user.sub, filteredUpdate);
     } catch {
       throw new UnauthorizedException('This operation is not allowed');
     }
@@ -99,7 +98,7 @@ export class UserController {
         updatedUser,
         allowedFields,
       );
-      return this.dbService.update(+id, filteredUpdate);
+      return this.userService.update(+id, filteredUpdate);
     } catch {
       throw new UnauthorizedException('This operation is not allowed');
     }
@@ -110,12 +109,12 @@ export class UserController {
   deleteOwnProfile(@Request() req: Request & { user: TokenPayload }): {
     deleted: boolean;
   } {
-    return this.dbService.delete(req.user.sub);
+    return this.userService.delete(req.user.sub);
   }
 
   @Roles(Role.ADMIN)
   @Delete(':id')
   delete(@Param('id') id: string): { deleted: boolean } {
-    return this.dbService.delete(+id);
+    return this.userService.delete(+id);
   }
 }

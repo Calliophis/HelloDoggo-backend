@@ -10,16 +10,14 @@ import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { SignupDto } from '../../shared/dto/signup.dto';
 import { LoginDto } from '../../shared/dto/login.dto';
-import { DbService } from '../../shared/database/db.service';
+import { UserService } from '../user/user.service';
 
 @Public()
 @Controller('auth')
 export class AuthController {
-  protected dbService: DbService;
-
-  constructor(private authService: AuthService) {
-    this.dbService = new DbService('usersDB.json');
-  }
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   @Post('signup')
   async signup(@Body() user: SignupDto) {

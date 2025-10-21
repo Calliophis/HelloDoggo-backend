@@ -6,13 +6,11 @@ import { User } from '../../core/user/user.model';
 import { PaginationDto } from '../dto/pagination.dto';
 import { DEFAULT_PAGE_SIZE } from '../constants';
 
-export class DbService {
-  private readonly dbFilePath: string;
+export abstract class DbService {
   private readonly distDbFilePath: string;
 
   constructor(path: string) {
-    this.dbFilePath = join(process.cwd(), `src/shared/database/${path}`);
-    this.distDbFilePath = this.dbFilePath;
+    this.distDbFilePath = join(process.cwd(), `src/shared/database/${path}`);
   }
 
   private readDbFile<T>(): T[] {
