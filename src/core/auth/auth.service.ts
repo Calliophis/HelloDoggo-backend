@@ -43,7 +43,7 @@ export class AuthService {
         lastName,
         email,
         password: hash,
-        role: 'user',
+        role: Role.USER,
       });
     }
   }
