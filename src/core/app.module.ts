@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { DogController } from 'src/core/dog/dog.controller';
-import { UserController } from 'src/core/user/user.controller';
 import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { AppService } from './app.service';
+import { DogController } from './dog/dog.controller';
+import { UserController } from './user/user.controller';
 
 @Module({
   imports: [
