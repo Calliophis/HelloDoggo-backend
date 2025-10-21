@@ -23,6 +23,50 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
+**HELLODOGGO BACKEND**
+**WORK IN PROGRESS**
+
+**FRENCH**
+Développement d'une plateforme d'adoption de chiens à destination de refuges. 
+
+- Ecriture dans deux bases de données sous forme de fichiers json. 
+-- dogsDB.json stocke les informations des chiens (id, nom, race, sexe, description et chemin de l'image).
+--- Permet de récupérer et modifier les chiens existants et créer un nouveau chien.
+-- usersDB.json stocke les informations concernant les utilisateurs (id, email, nom, prénom, mot de passe et role).
+--- Permet de récupérer et modifier les utilisateurs existants et d'en créer un nouveau.
+
+- Création de compte et système d'authentification avec token encrypté avec bcrypt. 
+
+- Role-based permissions : admin, editor, user : voir `docs\roles-permissions.md`
+
+-- Pour naviguer dans l'application avec les divers profils: 
+--- s'authentifier avec admin@hellodoggo.com pour avoir le role admin 
+--- s'authentifier avec volunteer@doggorescue.com pour avoir le role editor 
+--- s'authentifier avec user@email.com ou créer un nouveau compte pour avoir le role user 
+---- Le mot de passe pour les trois comptes est Passw0rd!
+
+Pour le frontend, développé en Angular, voir `https://github.com/Calliophis/HelloDoggo-frontend`
+
+**ENGLISH**
+Development of a dog adoption platform for animal shelters.
+
+- Data is stored in two JSON file-based databases:
+-- dogsDB.json stores information about the dogs (ID, name, breed, sex, description, and image path).
+--- Allows retrieving and updating existing dogs, as well as creating new ones.
+-- usersDB.json stores user information (ID, email, first name, last name, password, and role).
+--- Allows retrieving and updating existing users, and creating new ones.
+
+Account creation and authentication system with a token encrypted using bcrypt.
+
+- Role-based permissions: admin, editor, user: see `docs\roles-permissions.md`
+
+-- To navigate the app with different profiles:
+--- log in with admin@hellodoggo.com to access the Admin role
+--- log in with volunteer@doggorescue.com to access the Editor role
+--- log in with user@email.com or create a new account to access the User role
+---- The password for all accounts is Passw0rd!
+
+For the frontend, developed in Angular, see `https://github.com/Calliophis/HelloDoggo-frontend`
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
