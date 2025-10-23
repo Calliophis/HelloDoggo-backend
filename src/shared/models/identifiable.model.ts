@@ -1,7 +1,9 @@
-export abstract class Identifiable {
-  id: number;
+import { UUID } from 'crypto';
 
-  constructor(id: number) {
+export abstract class Identifiable {
+  id: UUID;
+
+  constructor(id: UUID) {
     this.id = id;
   }
 }

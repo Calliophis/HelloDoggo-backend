@@ -6,11 +6,11 @@ export class PaginationDto {
   @IsPositive()
   @IsOptional()
   @Type(() => Number)
-  page: number;
+  skip: number;
 
   @IsNumber()
   @IsPositive()
   @IsOptional()
   @Type(() => Number)
-  elementsPerPage: number;
+  take: number;
 }

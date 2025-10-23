@@ -1,3 +1,4 @@
+import { UUID } from 'crypto';
 import { Identifiable } from '../../shared/models/identifiable.model';
 import { Role } from '../auth/enums/role.enum';
 
@@ -9,7 +10,7 @@ export class User extends Identifiable {
   role: Role;
 
   constructor(
-    id: number,
+    id: UUID,
     firstName: string,
     lastName: string,
     email: string,

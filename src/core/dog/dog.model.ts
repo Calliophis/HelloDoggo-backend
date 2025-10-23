@@ -1,3 +1,4 @@
+import { UUID } from 'crypto';
 import { Identifiable } from '../../shared/models/identifiable.model';
 
 export class Dog extends Identifiable {
@@ -8,7 +9,7 @@ export class Dog extends Identifiable {
   imgUrl: string | undefined;
 
   constructor(
-    id: number,
+    id: UUID,
     name: string,
     sex: 'male' | 'female',
     breed: string,

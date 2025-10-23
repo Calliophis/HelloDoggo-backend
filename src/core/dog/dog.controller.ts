@@ -24,12 +24,11 @@ import { extname } from 'path';
 import * as fs from 'fs';
 import { PaginationDto } from '../../shared/dto/pagination.dto';
 import { DogService } from './dog.service';
+import { UUID } from 'crypto';
 
 @Controller('dog')
 export class DogController {
-  constructor(
-    private dogService: DogService,
-  ) { }
+  constructor(private dogService: DogService) {}
 
   @Public()
   @Get('all')
@@ -46,8 +45,8 @@ export class DogController {
 
   @Public()
   @Get(':id')
-  findById(@Param('id') id: string): Dog {
-    const dog = this.dogService.findById(+id);
+  findById(@Param('id') id: UUID): Dog {
+    const dog = this.dogService.findById(id);
     if (dog) {
       return dog;
     }
@@ -100,9 +99,9 @@ export class DogController {
   )
   updateDogImage(
     @UploadedFile() file: Express.Multer.File,
-    @Param('id') id: string,
+    @Param('id') id: UUID,
   ): Dog {
-    const existingUrl = this.dogService.findById(+id)?.imgUrl;
+    const existingUrl = this.dogService.findById(id)?.imgUrl;
     if (existingUrl) {
       fs.unlink(`./${existingUrl}`, (error) => {
         if (error) throw error;
@@ -110,20 +109,20 @@ export class DogController {
     }
     const imageUrl = `/uploads/${file.filename}`;
     const updatedImage = { imgUrl: imageUrl };
-    return this.dogService.update(+id, updatedImage);
+    return this.dogService.update(id, updatedImage);
   }
 
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.EDITOR)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatedDog: Partial<Dog>) {
-    return this.dogService.update(+id, updatedDog);
+  update(@Param('id') id: UUID, @Body() updatedDog: Partial<Dog>) {
+    return this.dogService.update(id, updatedDog);
   }
 
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.EDITOR)
   @Delete(':id')
-  delete(@Param('id') id: string): { deleted: boolean } {
-    return this.dogService.delete(+id);
+  delete(@Param('id') id: UUID): { deleted: boolean } {
+    return this.dogService.delete(id);
   }
 }

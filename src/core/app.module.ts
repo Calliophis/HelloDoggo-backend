@@ -11,11 +11,11 @@ import { PrismaService } from 'src/shared/database/prisma.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ 
+    ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env' 
-    }), 
-    AuthModule
+      envFilePath: '.env',
+    }),
+    AuthModule,
   ],
   controllers: [AppController, DogController, UserController],
   providers: [AppService, UserService, DogService, PrismaService],

@@ -19,6 +19,8 @@ import { AuthService, TokenPayload } from '../auth/auth.service';
 import { UpdateUserDto } from '../../shared/dto/update-user.dto';
 import { PaginationDto } from '../../shared/dto/pagination.dto';
 import { UserService } from './user.service';
+import { UUID } from 'crypto';
+import { Prisma } from '@prisma/client';
 
 @UseGuards(RolesGuard)
 @Controller('user')
@@ -26,25 +28,23 @@ export class UserController {
   constructor(
     private authService: AuthService,
     private userService: UserService,
-  ) { }
+  ) {}
 
   @Roles(Role.ADMIN)
   @Get('all')
-  findAll(@Query() paginationDto: PaginationDto): {
-    paginatedItems: User[];
-    totalNumberOfItems: number;
-  } {
-    const paginatedItems =
-      this.userService.findAll(paginationDto).paginatedItems;
-    const totalNumberOfItems =
-      this.userService.findAll(paginationDto).totalNumberOfItems;
-    return { paginatedItems, totalNumberOfItems };
+  getAllUsers(
+    @Query() paginationDto: PaginationDto,
+  ): Promise<{ users: User[]; totalUsers: number }> {
+    return this.userService.users(paginationDto);
   }
 
   @Roles(Role.ADMIN, Role.EDITOR, Role.USER)
   @Get('me')
-  getProfile(@Request() req: Request & { user: TokenPayload }): User {
-    const user = this.userService.findById(req.user.sub);
+  async getProfile(
+    @Request() req: Request & { user: TokenPayload },
+  ): Promise<User | null> {
+    const id = req.user.sub;
+    const user = await this.userService.user({ id });
     if (user) {
       return user;
     }
@@ -53,8 +53,10 @@ export class UserController {
 
   @Roles(Role.ADMIN)
   @Get()
-  findByEmail(@Query('email') email: string): User {
-    const user = this.userService.findByEmail(email);
+  async findByEmail(@Query('email') email: string): Promise<User> {
+    const user = await this.userService.user({
+      email,
+    } as Prisma.usersWhereUniqueInput);
     if (user) {
       return user;
     }
@@ -63,8 +65,8 @@ export class UserController {
 
   @Roles(Role.ADMIN)
   @Get(':id')
-  findById(@Param('id') id: string): User {
-    const user = this.userService.findById(+id);
+  async getUserById(@Param('id') id: UUID): Promise<User | null> {
+    const user = await this.userService.user({ id });
     if (user) {
       return user;
     }
@@ -83,7 +85,11 @@ export class UserController {
         updatedUser,
         allowedFields,
       );
-      return this.userService.update(request.user.sub, filteredUpdate);
+      const id: UUID = request.user.sub;
+      return await this.userService.updateUser({
+        where: { id },
+        data: filteredUpdate,
+      });
     } catch {
       throw new UnauthorizedException('This operation is not allowed');
     }
@@ -91,14 +97,17 @@ export class UserController {
 
   @Roles(Role.ADMIN)
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updatedUser: UpdateUserDto) {
+  async update(@Param('id') id: UUID, @Body() updatedUser: UpdateUserDto) {
     const allowedFields = ['role'];
     try {
       const filteredUpdate = await this.authService.filterUpdate(
         updatedUser,
         allowedFields,
       );
-      return this.userService.update(+id, filteredUpdate);
+      return await this.userService.updateUser({
+        where: { id },
+        data: filteredUpdate,
+      });
     } catch {
       throw new UnauthorizedException('This operation is not allowed');
     }
@@ -106,15 +115,16 @@ export class UserController {
 
   @Roles(Role.ADMIN, Role.EDITOR, Role.USER)
   @Delete('me')
-  deleteOwnProfile(@Request() req: Request & { user: TokenPayload }): {
-    deleted: boolean;
-  } {
-    return this.userService.delete(req.user.sub);
+  async deleteOwnProfile(
+    @Request() req: Request & { user: TokenPayload },
+  ): Promise<User> {
+    const id: UUID = req.user.sub;
+    return this.userService.deleteUser({ id });
   }
 
   @Roles(Role.ADMIN)
   @Delete(':id')
-  delete(@Param('id') id: string): { deleted: boolean } {
-    return this.userService.delete(+id);
+  async delete(@Param('id') id: UUID): Promise<User> {
+    return this.userService.deleteUser({ id });
   }
 }
