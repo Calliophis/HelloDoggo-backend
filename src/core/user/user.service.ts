@@ -29,7 +29,6 @@ export class UserService {
     const users = databaseUsers.map((user) =>
       UserFactory.createFromDatabaseToUser(user),
     );
-    console.log(users);
     return { users, totalUsers };
   }
 
@@ -65,8 +64,9 @@ export class UserService {
     data: Prisma.usersUpdateInput;
   }): Promise<User> {
     const { where, data } = params;
+    const mappedData = UserFactory.mapFromUserToDatabase(data);
     const databaseUpdatedUser = await this.prisma.users.update({
-      data,
+      data: mappedData,
       where,
     });
     const updatedUser =
@@ -82,75 +82,4 @@ export class UserService {
       UserFactory.createFromDatabaseToUser(databaseDeletedUser);
     return deletedUser;
   }
-
-  // findAll(paginationDto: PaginationDto): {
-  //     paginatedItems: User[];
-  //     totalNumberOfItems: number;
-  // } {
-  //     const fullData = this.readDbFile();
-  //     const paginatedItems = this.paginateData(fullData, paginationDto);
-  //     const totalNumberOfItems = fullData.length;
-  //     return { paginatedItems, totalNumberOfItems };
-  // }
-
-  // generateId(): UUID {
-  //     return crypto.randomUUID();
-  // }
-
-  // create(newUser: Omit<User, 'id'>): User {
-  //     const newId = this.generateId();
-
-  //     const user = { id: newId, ...newUser };
-
-  //     data.push(user);
-  //     this.writeDbFile(data);
-  //     return user;
-  // }
-
-  // update(id: UUID, updatedUser: Partial<User>): User {
-  //     const data = this.readDbFile();
-  //     const index = data.findIndex((user) => user.id === id);
-  //     if (index === -1) {
-  //       throw new NotFoundException(`Item with id ${id} not found`);
-  //     }
-  //     data[index] = {
-  //       ...data[index],
-  //       ...Object.fromEntries(
-  //         Object.entries(updatedUser).filter(([value]) => value !== undefined),
-  //       ),
-  //     };
-  //     this.writeDbFile(data);
-  //     return data[index];
-  // }
-
-  // delete(id: UUID): { deleted: boolean } {
-  //     const data = this.readDbFile();
-  //     const index = data.findIndex((user) => user.id === id);
-  //     if (index === -1) {
-  //       throw new NotFoundException(`User with id ${id} not found`);
-  //     }
-  //     data.splice(index, 1);
-  //     this.writeDbFile(data);
-  //     return { deleted: true };
-  // }
-
-  // private paginateData(data: User[], paginationDto: PaginationDto): User[] {
-  //     const paginatedData: User[] = [];
-  //     const skip = (paginationDto.page - 1) * paginationDto.elementsPerPage;
-  //     const limit = paginationDto.elementsPerPage;
-  //     let paginatedLength = (skip ?? 0) + (limit ?? DEFAULT_PAGE_SIZE);
-
-  //     if (paginatedLength > data.length) {
-  //       paginatedLength = data.length;
-  //     }
-
-  //     if (skip > data.length) {
-  //       throw new Error();
-  //     }
-
-  //     for (let index = skip ?? 0; index < paginatedLength; index++) {
-  //       paginatedData.push(data[index]);
-  //     }
-  //     return paginatedData;
-  //   }
 }

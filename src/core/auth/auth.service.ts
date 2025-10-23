@@ -7,7 +7,6 @@ import { Role } from './enums/role.enum';
 import { User } from '../user/user.model';
 import { UserService } from '../user/user.service';
 import { UUID } from 'crypto';
-import { Prisma } from '@prisma/client';
 
 export interface TokenPayload {
   sub: UUID;
@@ -36,7 +35,7 @@ export class AuthService {
   ) {
     const existingUser = await this.userService.user({
       email,
-    } as Prisma.usersWhereUniqueInput);
+    });
 
     if (existingUser) {
       throw new Error('This email is already used');
@@ -58,7 +57,7 @@ export class AuthService {
   ): Promise<{ accessToken: string; role: Role }> {
     const existingUser = await this.userService.user({
       email,
-    } as Prisma.usersWhereUniqueInput);
+    });
 
     if (!existingUser) {
       throw new Error('Incorrect email or password');

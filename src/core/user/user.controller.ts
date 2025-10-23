@@ -20,7 +20,6 @@ import { UpdateUserDto } from '../../shared/dto/update-user.dto';
 import { PaginationDto } from '../../shared/dto/pagination.dto';
 import { UserService } from './user.service';
 import { UUID } from 'crypto';
-import { Prisma } from '@prisma/client';
 
 @UseGuards(RolesGuard)
 @Controller('user')
@@ -56,7 +55,7 @@ export class UserController {
   async findByEmail(@Query('email') email: string): Promise<User> {
     const user = await this.userService.user({
       email,
-    } as Prisma.usersWhereUniqueInput);
+    });
     if (user) {
       return user;
     }
@@ -86,6 +85,7 @@ export class UserController {
         allowedFields,
       );
       const id: UUID = request.user.sub;
+
       return await this.userService.updateUser({
         where: { id },
         data: filteredUpdate,
