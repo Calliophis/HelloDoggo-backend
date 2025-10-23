@@ -6,8 +6,6 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserService {
-  private readonly distDbFilePath: string;
-
   constructor(private prisma: PrismaService) {}
 
   async users(params: {

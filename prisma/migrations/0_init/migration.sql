@@ -6,6 +6,7 @@ CREATE TABLE "dogs" (
     "sex" TEXT NOT NULL DEFAULT '',
     "breed" TEXT NOT NULL DEFAULT '',
     "description" TEXT NOT NULL DEFAULT '',
+    "img_url" TEXT NOT NULL DEFAULT '',
 
     CONSTRAINT "dogs_pkey" PRIMARY KEY ("id")
 );

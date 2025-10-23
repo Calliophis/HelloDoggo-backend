@@ -52,7 +52,7 @@ export class UserController {
 
   @Roles(Role.ADMIN)
   @Get()
-  async findByEmail(@Query('email') email: string): Promise<User> {
+  async getUserByEmail(@Query('email') email: string): Promise<User> {
     const user = await this.userService.user({
       email,
     });
@@ -77,7 +77,7 @@ export class UserController {
   async updateOwnProfile(
     @Request() request: Request & { user: TokenPayload },
     @Body() updatedUser: UpdateUserDto,
-  ) {
+  ): Promise<User> {
     const allowedFields = ['firstName', 'lastName', 'email', 'password'];
     try {
       const filteredUpdate = await this.authService.filterUpdate(
@@ -97,7 +97,10 @@ export class UserController {
 
   @Roles(Role.ADMIN)
   @Patch(':id')
-  async update(@Param('id') id: UUID, @Body() updatedUser: UpdateUserDto) {
+  async update(
+    @Param('id') id: UUID,
+    @Body() updatedUser: UpdateUserDto,
+  ): Promise<User> {
     const allowedFields = ['role'];
     try {
       const filteredUpdate = await this.authService.filterUpdate(

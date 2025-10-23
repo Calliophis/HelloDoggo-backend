@@ -15,6 +15,7 @@ model dogs {
   sex         String   @default("")
   breed       String   @default("")
   description String   @default("")
+  img_url     String   @default("")
 }
 
 model users {

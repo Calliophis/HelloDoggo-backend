@@ -32,21 +32,16 @@ export class DogController {
 
   @Public()
   @Get('all')
-  findAll(@Query() paginationDto: PaginationDto): {
-    paginatedItems: Dog[];
-    totalNumberOfItems: number;
-  } {
-    const paginatedItems =
-      this.dogService.findAll(paginationDto).paginatedItems;
-    const totalNumberOfItems =
-      this.dogService.findAll(paginationDto).totalNumberOfItems;
-    return { paginatedItems, totalNumberOfItems };
+  getAllDogs(
+    @Query() paginationDto: PaginationDto,
+  ): Promise<{ dogs: Dog[]; totalDogs: number }> {
+    return this.dogService.dogs(paginationDto);
   }
 
   @Public()
   @Get(':id')
-  findById(@Param('id') id: UUID): Dog {
-    const dog = this.dogService.findById(id);
+  async getDogById(@Param('id') id: UUID): Promise<Dog | null> {
+    const dog = await this.dogService.dog({ id });
     if (dog) {
       return dog;
     }
@@ -115,14 +110,20 @@ export class DogController {
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.EDITOR)
   @Patch(':id')
-  update(@Param('id') id: UUID, @Body() updatedDog: Partial<Dog>) {
-    return this.dogService.update(id, updatedDog);
+  async update(
+    @Param('id') id: UUID,
+    @Body() updatedDog: Partial<Dog>,
+  ): Promise<Dog> {
+    return await this.dogService.updateDog({
+      where: { id },
+      data: updatedDog,
+    });
   }
 
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.EDITOR)
   @Delete(':id')
-  delete(@Param('id') id: UUID): { deleted: boolean } {
-    return this.dogService.delete(id);
+  async delete(@Param('id') id: UUID): Promise<Dog> {
+    return await this.dogService.deleteDog({ id });
   }
 }
