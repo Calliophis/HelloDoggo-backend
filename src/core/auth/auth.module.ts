@@ -6,6 +6,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from '../user/user.service';
+import { PrismaService } from 'src/shared/database/prisma.service';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UserService } from '../user/user.service';
   providers: [
     AuthService,
     UserService,
+    PrismaService,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,

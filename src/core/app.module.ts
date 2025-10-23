@@ -7,6 +7,7 @@ import { DogController } from './dog/dog.controller';
 import { UserController } from './user/user.controller';
 import { UserService } from './user/user.service';
 import { DogService } from './dog/dog.service';
+import { PrismaService } from 'src/shared/database/prisma.service';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { DogService } from './dog/dog.service';
     AuthModule
   ],
   controllers: [AppController, DogController, UserController],
-  providers: [AppService, UserService, DogService],
+  providers: [AppService, UserService, DogService, PrismaService],
 })
 export class AppModule {}
