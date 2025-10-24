@@ -1,7 +1,7 @@
 import { Prisma, users as PrismaUser } from '@prisma/client';
-import { User } from './user.model';
 import { UUID } from 'crypto';
-import { Role } from '../auth/enums/role.enum';
+import { Role } from 'src/core/domain/auth/enums/role.enum';
+import { User } from 'src/core/domain/user/user.model';
 
 export type DatabaseUser = PrismaUser;
 

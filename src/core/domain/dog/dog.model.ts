@@ -1,7 +1,7 @@
 import { UUID } from 'crypto';
-import { Identifiable } from '../../shared/models/identifiable.model';
 
-export class Dog extends Identifiable {
+export class Dog {
+  id: UUID;
   name: string;
   sex: 'male' | 'female';
   breed: string;
@@ -16,8 +16,7 @@ export class Dog extends Identifiable {
     imgUrl: string,
     description: string,
   ) {
-    super(id);
-
+    this.id = id;
     this.name = name;
     this.sex = sex;
     this.breed = breed;

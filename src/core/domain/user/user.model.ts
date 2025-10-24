@@ -1,8 +1,8 @@
 import { UUID } from 'crypto';
-import { Identifiable } from '../../shared/models/identifiable.model';
 import { Role } from '../auth/enums/role.enum';
 
-export class User extends Identifiable {
+export class User {
+  id: UUID;
   firstName: string;
   lastName: string;
   email: string;
@@ -17,12 +17,21 @@ export class User extends Identifiable {
     password: string,
     role: Role,
   ) {
-    super(id);
-
+    this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.password = password;
     this.role = role;
   }
+}
+
+export interface GetUsersParams {
+  skip?: number;
+  take?: number;
+}
+
+export interface UpdateUserParams {
+  id: UUID;
+  user: Partial<User>;
 }

@@ -1,6 +1,6 @@
 import { Prisma, dogs as PrismaDog } from '@prisma/client';
-import { Dog } from './dog.model';
 import { UUID } from 'crypto';
+import { Dog } from 'src/core/domain/dog/dog.model';
 
 export type DatabaseDog = PrismaDog;
 

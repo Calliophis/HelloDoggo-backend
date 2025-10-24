@@ -9,6 +9,7 @@ import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import { AuthService } from '../auth.service';
 import { Request } from 'express';
+import { catchError, map, Observable } from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,7 +18,7 @@ export class AuthGuard implements CanActivate {
     private authService: AuthService,
   ) {}
 
-  async canActivate(context: ExecutionContext): Promise<boolean> {
+  canActivate(context: ExecutionContext): Observable<boolean> | boolean {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
@@ -29,11 +30,11 @@ export class AuthGuard implements CanActivate {
 
     const request: Request = context.switchToHttp().getRequest();
 
-    try {
-      await this.authService.verifyJwtUser(request);
-    } catch {
-      throw new UnauthorizedException('Incorrect token');
-    }
-    return true;
+    return this.authService.verifyJwtUser(request).pipe(
+      map(() => true),
+      catchError(() => {
+        throw new UnauthorizedException('Incorrect token');
+      }),
+    );
   }
 }

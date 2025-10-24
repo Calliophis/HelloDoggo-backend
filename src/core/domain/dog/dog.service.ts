@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
-import { DEFAULT_PAGE_SIZE } from '../../shared/constants';
-import { PaginationDto } from '../../shared/dto/pagination.dto';
 import { Dog } from './dog.model';
 import { UUID } from 'crypto';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { Prisma } from '@prisma/client';
-import { DogFactory } from './dog.factory';
+import { DogFactory } from 'src/core/adapter/factories/dog.factory';
+import { PaginationDto } from 'src/shared/dto/pagination.dto';
+import { DEFAULT_PAGE_SIZE } from 'src/shared/constants';
 
 @Injectable()
 export class DogService {

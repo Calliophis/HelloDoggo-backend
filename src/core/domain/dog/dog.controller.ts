@@ -17,14 +17,14 @@ import { Public } from '../auth/decorators/public.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Role } from '../auth/enums/role.enum';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { CreateDogDto } from '../../shared/dto/create-dog.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import * as fs from 'fs';
-import { PaginationDto } from '../../shared/dto/pagination.dto';
 import { DogService } from './dog.service';
 import { UUID } from 'crypto';
+import { PaginationDto } from 'src/shared/dto/pagination.dto';
+import { CreateDogDto } from 'src/shared/dto/create-dog.dto';
 
 @Controller('dog')
 export class DogController {
@@ -32,10 +32,10 @@ export class DogController {
 
   @Public()
   @Get('all')
-  getAllDogs(
+  async getAllDogs(
     @Query() paginationDto: PaginationDto,
   ): Promise<{ dogs: Dog[]; totalDogs: number }> {
-    return this.dogService.dogs(paginationDto);
+    return await this.dogService.dogs(paginationDto);
   }
 
   @Public()
