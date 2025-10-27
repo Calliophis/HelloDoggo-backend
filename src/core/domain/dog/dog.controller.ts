@@ -3,11 +3,14 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   NotFoundException,
   Param,
   Patch,
   Post,
   Query,
+  UnauthorizedException,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -18,13 +21,11 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { Role } from '../auth/enums/role.enum';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
-import * as fs from 'fs';
 import { DogService } from './dog.service';
 import { UUID } from 'crypto';
 import { PaginationDto } from 'src/shared/dto/pagination.dto';
 import { CreateDogDto } from 'src/shared/dto/create-dog.dto';
+import { catchError, Observable, tap } from 'rxjs';
 
 @Controller('dog')
 export class DogController {
@@ -32,98 +33,63 @@ export class DogController {
 
   @Public()
   @Get('all')
-  async getAllDogs(
+  getAllDogs(
     @Query() paginationDto: PaginationDto,
-  ): Promise<{ dogs: Dog[]; totalDogs: number }> {
-    return await this.dogService.dogs(paginationDto);
+  ): Observable<{ dogs: Dog[]; totalDogs: number }> {
+    return this.dogService.getDogs(paginationDto);
   }
 
   @Public()
   @Get(':id')
-  async getDogById(@Param('id') id: UUID): Promise<Dog | null> {
-    const dog = await this.dogService.dog({ id });
-    if (dog) {
-      return dog;
-    }
-    throw new NotFoundException(`Dog with id ${id} not found`);
+  getDogById(@Param('id') id: UUID): Observable<Dog | null> {
+    return this.dogService.getDogById(id).pipe(
+      tap((dog) => {
+        if (!dog) {
+          throw new NotFoundException(`Dog with id ${id} not found`);
+        }
+      }),
+    );
   }
 
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.EDITOR)
   @Post('create')
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: './uploads',
-        filename: (request, file, callback) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const fileExtension = extname(file.originalname);
-          callback(null, `${file.fieldname}-${uniqueSuffix}${fileExtension}`);
-        },
-      }),
-    }),
-  )
+  @UseInterceptors(FileInterceptor('image'))
   create(
     @UploadedFile() file: Express.Multer.File,
-    @Body() body: Omit<CreateDogDto, 'imgUrl'>,
-  ): Dog {
-    const imageUrl = `/uploads/${file.filename}`;
-    const newDog = {
-      ...body,
-      imgUrl: imageUrl,
-    };
-    return this.dogService.create(newDog);
-  }
-
-  @UseGuards(RolesGuard)
-  @Roles(Role.ADMIN, Role.EDITOR)
-  @Patch(':id/image')
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: './uploads',
-        filename: (request, file, callback) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const fileExtension = extname(file.originalname);
-          callback(null, `${file.fieldname}-${uniqueSuffix}${fileExtension}`);
-        },
-      }),
-    }),
-  )
-  updateDogImage(
-    @UploadedFile() file: Express.Multer.File,
-    @Param('id') id: UUID,
-  ): Dog {
-    const existingUrl = this.dogService.findById(id)?.imgUrl;
-    if (existingUrl) {
-      fs.unlink(`./${existingUrl}`, (error) => {
-        if (error) throw error;
-      });
-    }
-    const imageUrl = `/uploads/${file.filename}`;
-    const updatedImage = { imgUrl: imageUrl };
-    return this.dogService.update(id, updatedImage);
+    @Body() body: CreateDogDto,
+  ): Observable<Dog> {
+    console.log('image in controller : ' + file.originalname);
+    return this.dogService.createDog(body, file);
   }
 
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.EDITOR)
   @Patch(':id')
-  async update(
+  @UseInterceptors(FileInterceptor('image'))
+  updateDog(
+    @UploadedFile() image: Express.Multer.File,
     @Param('id') id: UUID,
-    @Body() updatedDog: Partial<Dog>,
-  ): Promise<Dog> {
-    return await this.dogService.updateDog({
-      where: { id },
-      data: updatedDog,
-    });
+    @Body() dog: Partial<Dog>,
+  ): Observable<Dog> {
+    return this.dogService
+      .updateDog({
+        id,
+        dog,
+        image,
+      })
+      .pipe(
+        catchError(() => {
+          throw new UnauthorizedException('This operation is not allowed');
+        }),
+      );
   }
 
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.EDITOR)
   @Delete(':id')
-  async delete(@Param('id') id: UUID): Promise<Dog> {
-    return await this.dogService.deleteDog({ id });
+  @HttpCode(HttpStatus.NO_CONTENT)
+  deleteDog(@Param('id') id: UUID): Observable<boolean> {
+    return this.dogService.deleteDog(id);
   }
 }

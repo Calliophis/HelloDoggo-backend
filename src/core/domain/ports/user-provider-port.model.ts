@@ -10,7 +10,7 @@ export interface UserProviderI {
   getUserByEmail(email: string): Observable<User | null>;
   createUser(user: Partial<User>): Observable<User>;
   updateUser(params: UpdateUserParams): Observable<User>;
-  deleteUser(id: UUID): Observable<User>;
+  deleteUser(id: UUID): Observable<boolean>;
 }
 
 export const UserProviderI = Symbol('UserProviderI');

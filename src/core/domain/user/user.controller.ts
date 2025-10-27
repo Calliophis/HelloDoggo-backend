@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   NotFoundException,
   Param,
   Patch,
@@ -115,16 +117,18 @@ export class UserController {
 
   @Roles(Role.ADMIN, Role.EDITOR, Role.USER)
   @Delete('me')
+  @HttpCode(HttpStatus.NO_CONTENT)
   deleteOwnProfile(
     @Request() req: Request & { user: TokenPayload },
-  ): Observable<User> {
+  ): Observable<boolean> {
     const id: UUID = req.user.sub;
     return this.userService.deleteUser(id);
   }
 
   @Roles(Role.ADMIN)
   @Delete(':id')
-  deleteUser(@Param('id') id: UUID): Observable<User> {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  deleteUser(@Param('id') id: UUID): Observable<boolean> {
     return this.userService.deleteUser(id);
   }
 }

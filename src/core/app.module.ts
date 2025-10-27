@@ -10,6 +10,9 @@ import { UserService } from './domain/user/user.service';
 import { DogService } from './domain/dog/dog.service';
 import { UserProviderI } from './domain/ports/user-provider-port.model';
 import { UserProvider } from './adapter/providers/user.provider';
+import { DogProviderI } from './domain/ports/dog-provider-port.model';
+import { DogProvider } from './adapter/providers/dog.provider';
+import { SupabaseService } from 'src/shared/database/supabase.service';
 
 @Module({
   imports: [
@@ -25,9 +28,14 @@ import { UserProvider } from './adapter/providers/user.provider';
     UserService,
     DogService,
     PrismaService,
+    SupabaseService,
     {
       provide: UserProviderI,
       useClass: UserProvider,
+    },
+    {
+      provide: DogProviderI,
+      useClass: DogProvider,
     },
   ],
 })

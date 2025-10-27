@@ -11,8 +11,5 @@ export class CreateDogDto {
   breed: string;
 
   @IsString()
-  imgUrl: string;
-
-  @IsString()
   description: string;
 }

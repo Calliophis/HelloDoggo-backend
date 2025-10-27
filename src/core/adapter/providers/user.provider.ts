@@ -92,15 +92,11 @@ export class UserProvider implements UserProviderI {
     );
   }
 
-  deleteUser(id: UUID): Observable<User> {
+  deleteUser(id: UUID): Observable<boolean> {
     return from(
       this.prisma.users.delete({
         where: { id },
       }),
-    ).pipe(
-      map((databaseUser) => {
-        return UserFactory.createFromDatabaseToUser(databaseUser);
-      }),
-    );
+    ).pipe(map(() => true));
   }
 }

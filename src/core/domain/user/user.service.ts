@@ -30,7 +30,7 @@ export class UserService {
     return this.userProvider.updateUser(params);
   }
 
-  deleteUser(id: UUID): Observable<User> {
+  deleteUser(id: UUID): Observable<boolean> {
     return this.userProvider.deleteUser(id);
   }
 }
