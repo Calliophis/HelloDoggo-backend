@@ -1,5 +1,5 @@
 import { UUID } from 'crypto';
-import { Role } from 'src/domain/auth/enums/role.enum';
+import { Role } from '../../../domain/auth/enums/role.enum';
 
 export class User {
   id: UUID;

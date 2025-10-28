@@ -7,9 +7,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from '../user/user.service';
 import { UserProviderI } from '../ports/user-provider-port.model';
-import { UserProvider } from 'src/adapter/providers/user.provider';
-import { PrismaService } from 'src/adapter/database/prisma.service';
 import { PasswordService } from './password.service';
+import { PrismaService } from '../../adapter/database/prisma.service';
+import { UserProvider } from '../../adapter/providers/user.provider';
 
 @Module({
   imports: [

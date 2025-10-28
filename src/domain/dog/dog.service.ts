@@ -3,7 +3,7 @@ import { Dog, GetDogParams, UpdateDogParams } from './models/dog.model';
 import { UUID } from 'crypto';
 import { DogProviderI } from '../ports/dog-provider-port.model';
 import { Observable } from 'rxjs';
-import { DogProvider } from 'src/adapter/providers/dog.provider';
+import { DogProvider } from '../../adapter/providers/dog.provider';
 
 @Injectable()
 export class DogService {

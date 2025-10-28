@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { UUID } from 'crypto';
 import { forkJoin, from, map, Observable } from 'rxjs';
 import { UserFactory } from '../factories/user.factory';
-import { UserProviderI } from 'src/domain/ports/user-provider-port.model';
 import { PrismaService } from '../database/prisma.service';
+import { UserProviderI } from '../../domain/ports/user-provider-port.model';
 import {
   GetUsersParams,
   UpdateUserParams,
   User,
-} from 'src/domain/user/models/user.model';
+} from '../../domain/user/models/user.model';
 
 @Injectable()
 export class UserProvider implements UserProviderI {

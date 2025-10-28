@@ -9,15 +9,15 @@ import {
   of,
   switchMap,
 } from 'rxjs';
-import { DogProviderI } from 'src/domain/ports/dog-provider-port.model';
 import { PrismaService } from '../database/prisma.service';
 import { SupabaseService } from '../database/supabase.service';
-import {
-  Dog,
-  GetDogParams,
-  UpdateDogParams,
-} from 'src/domain/dog/models/dog.model';
 import { DogFactory } from '../factories/dog.factory';
+import {
+  GetDogParams,
+  Dog,
+  UpdateDogParams,
+} from '../../domain/dog/models/dog.model';
+import { DogProviderI } from '../../domain/ports/dog-provider-port.model';
 
 @Injectable()
 export class DogProvider implements DogProviderI {
