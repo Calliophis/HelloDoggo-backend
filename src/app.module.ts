@@ -13,6 +13,7 @@ import { DogProviderI } from './domain/ports/dog-provider-port.model';
 import { DogProvider } from './adapter/providers/dog.provider';
 import { PrismaService } from './adapter/database/prisma.service';
 import { SupabaseService } from './adapter/database/supabase.service';
+import { PasswordService } from './domain/auth/password.service';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { SupabaseService } from './adapter/database/supabase.service';
     DogService,
     PrismaService,
     SupabaseService,
+    PasswordService,
     {
       provide: UserProviderI,
       useClass: UserProvider,

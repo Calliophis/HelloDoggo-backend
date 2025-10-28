@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
@@ -8,6 +7,7 @@ import { UserService } from '../user/user.service';
 import { UUID } from 'crypto';
 import { from, map, Observable, switchMap } from 'rxjs';
 import { User } from '../user/models/user.model';
+import { PasswordService } from './password.service';
 
 export interface TokenPayload {
   sub: UUID;
@@ -21,11 +21,8 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
     private userService: UserService,
+    private passwordService: PasswordService,
   ) {}
-
-  hashPassword(password: string): Observable<string> {
-    return from(bcrypt.hash(password, 10));
-  }
 
   signup(firstName: string, lastName: string, email: string, password: string) {
     return this.userService.getUserByEmail(email).pipe(
@@ -33,7 +30,7 @@ export class AuthService {
         if (existingUser) {
           throw new Error('This email is already used');
         }
-        return this.hashPassword(password);
+        return this.passwordService.hashPassword(password);
       }),
       switchMap((hash) => {
         return this.userService.createUser({
@@ -56,14 +53,16 @@ export class AuthService {
         if (!existingUser) {
           throw new Error('Incorrect email or password');
         }
-        return from(bcrypt.compare(password, existingUser.password)).pipe(
-          map((isMatch) => {
-            if (!isMatch) {
-              throw new Error('Incorrect email or password');
-            }
-            return this.createToken(existingUser);
-          }),
-        );
+        return this.passwordService
+          .comparePassword(password, existingUser.password)
+          .pipe(
+            map((isMatch) => {
+              if (!isMatch) {
+                throw new Error('Incorrect email or password');
+              }
+              return this.createToken(existingUser);
+            }),
+          );
       }),
     );
   }

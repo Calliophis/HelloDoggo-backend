@@ -1,12 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { UserProviderI } from '../ports/user-provider-port.model';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { UUID } from 'crypto';
 import { GetUsersParams, UpdateUserParams, User } from './models/user.model';
+import { PasswordService } from '../auth/password.service';
 
 @Injectable()
 export class UserService {
-  constructor(@Inject(UserProviderI) private userProvider: UserProviderI) {}
+  constructor(
+    private passwordService: PasswordService,
+    @Inject(UserProviderI) private userProvider: UserProviderI,
+  ) {}
 
   getUsers(
     params: GetUsersParams,
@@ -27,6 +31,18 @@ export class UserService {
   }
 
   updateUser(params: UpdateUserParams): Observable<User> {
+    const user = params.user;
+    if (user.password) {
+      return this.passwordService.hashPassword(user.password).pipe(
+        switchMap((hash) => {
+          const updatedParams = {
+            ...params,
+            user: { ...user, password: hash },
+          };
+          return this.userProvider.updateUser(updatedParams);
+        }),
+      );
+    }
     return this.userProvider.updateUser(params);
   }
 

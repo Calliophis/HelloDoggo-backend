@@ -9,6 +9,7 @@ import { UserService } from '../user/user.service';
 import { UserProviderI } from '../ports/user-provider-port.model';
 import { UserProvider } from 'src/adapter/providers/user.provider';
 import { PrismaService } from 'src/adapter/database/prisma.service';
+import { PasswordService } from './password.service';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { PrismaService } from 'src/adapter/database/prisma.service';
     AuthService,
     UserService,
     PrismaService,
+    PasswordService,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,

@@ -59,7 +59,6 @@ export class DogController {
     @UploadedFile() file: Express.Multer.File,
     @Body() body: CreateDogDto,
   ): Observable<Dog> {
-    console.log('image in controller : ' + file.originalname);
     return this.dogService.createDog(body, file);
   }
 
