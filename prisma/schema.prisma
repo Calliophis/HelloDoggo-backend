@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model dogs {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  name        String   @default("")
+  sex         String   @default("")
+  breed       String   @default("")
+  description String   @default("")
+  img_url     String   @default("")
+}
+
+model users {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  first_name String   @default("")
+  last_name  String   @default("")
+  email      String   @unique @default("")
+  password   String   @default("")
+  role       String   @default("user")
+}

@@ -29,11 +29,13 @@
 **FRENCH**
 Développement d'une plateforme d'adoption de chiens à destination de refuges. 
 
-- Ecriture dans deux bases de données sous forme de fichiers json. 
--- dogsDB.json stocke les informations des chiens (id, nom, race, sexe, description et chemin de l'image).
+- Base de données PostgreSQL hébergées sur Supabase
+-- une table dogs stocke les informations des chiens (id, nom, race, sexe, description et chemin de l'image).
 --- Permet de récupérer et modifier les chiens existants et créer un nouveau chien.
--- usersDB.json stocke les informations concernant les utilisateurs (id, email, nom, prénom, mot de passe et role).
+-- une table users stocke les informations concernant les utilisateurs (id, email, nom, prénom, mot de passe et role).
 --- Permet de récupérer et modifier les utilisateurs existants et d'en créer un nouveau.
+
+-Prisma est utilisé comme ORM entre NestJS et PostgreSQL
 
 - Création de compte et système d'authentification avec token encrypté avec bcrypt. 
 
@@ -50,11 +52,13 @@ Pour le frontend, développé en Angular, voir `https://github.com/Calliophis/He
 **ENGLISH**
 Development of a dog adoption platform for animal shelters.
 
-- Data is stored in two JSON file-based databases:
--- dogsDB.json stores information about the dogs (ID, name, breed, sex, description, and image path).
+- PostgreSQL database hosted on Supabase
+-- dogs table stores information about the dogs (ID, name, breed, sex, description, and image path).
 --- Allows retrieving and updating existing dogs, as well as creating new ones.
--- usersDB.json stores user information (ID, email, first name, last name, password, and role).
+-- users table stores user information (ID, email, first name, last name, password, and role).
 --- Allows retrieving and updating existing users, and creating new ones.
+
+- Prisma is used as an ORM between NestJS and Supabase
 
 Account creation and authentication system with a token encrypted using bcrypt.
 
