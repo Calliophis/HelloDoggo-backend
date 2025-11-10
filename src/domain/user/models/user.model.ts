@@ -2,28 +2,14 @@ import { UUID } from 'crypto';
 import { Role } from '../../../domain/auth/enums/role.enum';
 
 export class User {
-  id: UUID;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  role: Role;
-
   constructor(
-    id: UUID,
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    role: Role,
-  ) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.password = password;
-    this.role = role;
-  }
+    public id: UUID,
+    public firstName: string,
+    public lastName: string,
+    public email: string,
+    public password: string,
+    public role: Role,
+  ) {}
 }
 
 export interface GetUsersParams {
