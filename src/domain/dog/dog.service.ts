@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Dog, GetDogParams, UpdateDogParams } from './models/dog.model';
+import { Dog, GetDogParams } from './models/dog.model';
 import { UUID } from 'crypto';
 import { DogProviderI } from '../ports/dog-provider-port.model';
 import { Observable } from 'rxjs';
 import { DogProvider } from '../../adapter/providers/dog.provider';
+import { UpdateDogDto } from './models/dto/update-dog.dto';
 
 @Injectable()
 export class DogService {
@@ -23,8 +24,12 @@ export class DogService {
     return this.dogProvider.createDog(dog, image);
   }
 
-  updateDog(params: UpdateDogParams): Observable<Dog> {
-    return this.dogProvider.updateDog(params);
+  updateDog(
+    id: UUID,
+    dog: UpdateDogDto,
+    image: Express.Multer.File,
+  ): Observable<Dog> {
+    return this.dogProvider.updateDog(id, dog, image);
   }
 
   deleteDog(id: UUID): Observable<boolean> {

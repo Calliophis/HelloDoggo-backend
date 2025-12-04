@@ -15,9 +15,3 @@ export interface GetDogParams {
   skip?: number;
   take?: number;
 }
-
-export interface UpdateDogParams {
-  id: UUID;
-  dog?: Partial<Dog>;
-  image?: Express.Multer.File;
-}

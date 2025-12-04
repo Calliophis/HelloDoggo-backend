@@ -12,12 +12,9 @@ import {
 import { PrismaService } from '../database/prisma.service';
 import { SupabaseService } from '../database/supabase.service';
 import { DogFactory } from '../factories/dog.factory';
-import {
-  GetDogParams,
-  Dog,
-  UpdateDogParams,
-} from '../../domain/dog/models/dog.model';
+import { GetDogParams, Dog } from '../../domain/dog/models/dog.model';
 import { DogProviderI } from '../../domain/ports/dog-provider-port.model';
+import { UpdateDogDto } from '../../domain/dog/models/dto/update-dog.dto';
 
 @Injectable()
 export class DogProvider implements DogProviderI {
@@ -110,21 +107,22 @@ export class DogProvider implements DogProviderI {
     );
   }
 
-  updateDog(params: UpdateDogParams): Observable<Dog> {
-    const id = params.id;
-
-    if (params.image) {
-      const image = params.image;
+  updateDog(
+    id: UUID,
+    dog: UpdateDogDto,
+    image: Express.Multer.File,
+  ): Observable<Dog> {
+    if (image) {
       return this.deleteDogImage(id).pipe(
         switchMap(() => this.uploadDogImage(image)),
         switchMap((imgUrl) => {
-          const dog = params.dog ? { ...params.dog, imgUrl } : { imgUrl };
-          return this.updateDogInfo(id, dog);
+          const dogInfo = dog ? { ...dog, imgUrl } : { imgUrl };
+          return this.updateDogInfo(id, dogInfo);
         }),
       );
     }
-    if (params.dog) {
-      return this.updateDogInfo(id, params.dog);
+    if (dog) {
+      return this.updateDogInfo(id, dog);
     }
     throw new Error('Nothing to update');
   }
