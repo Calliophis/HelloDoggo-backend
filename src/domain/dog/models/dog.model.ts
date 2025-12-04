@@ -10,8 +10,3 @@ export class Dog {
     public description: string,
   ) {}
 }
-
-export interface GetDogParams {
-  skip?: number;
-  take?: number;
-}

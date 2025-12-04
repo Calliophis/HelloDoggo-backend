@@ -12,9 +12,10 @@ import {
 import { PrismaService } from '../database/prisma.service';
 import { SupabaseService } from '../database/supabase.service';
 import { DogFactory } from '../factories/dog.factory';
-import { GetDogParams, Dog } from '../../domain/dog/models/dog.model';
+import { Dog } from '../../domain/dog/models/dog.model';
 import { DogProviderI } from '../../domain/ports/dog-provider-port.model';
 import { UpdateDogDto } from '../../domain/dog/models/dto/update-dog.dto';
+import { PaginationDto } from '../../domain/models/dto/pagination.dto';
 
 @Injectable()
 export class DogProvider implements DogProviderI {
@@ -24,7 +25,7 @@ export class DogProvider implements DogProviderI {
   ) {}
 
   getDogs(
-    params: GetDogParams,
+    params: PaginationDto,
   ): Observable<{ dogs: Dog[]; totalDogs: number }> {
     const { skip, take } = params;
     return forkJoin([

@@ -1,19 +1,16 @@
 import { Observable } from 'rxjs';
 import { UUID } from 'crypto';
-import {
-  GetUsersParams,
-  UpdateUserParams,
-  User,
-} from '../user/models/user.model';
+import { User } from '../user/models/user.model';
+import { PaginationDto } from '../models/dto/pagination.dto';
 
 export interface UserProviderI {
   getUsers(
-    params: GetUsersParams,
+    params: PaginationDto,
   ): Observable<{ users: User[]; totalUsers: number }>;
   getUserById(id: UUID): Observable<User | null>;
   getUserByEmail(email: string): Observable<User | null>;
   createUser(user: Partial<User>): Observable<User>;
-  updateUser(params: UpdateUserParams): Observable<User>;
+  updateUser(id: UUID, user: Partial<User>): Observable<User>;
   deleteUser(id: UUID): Observable<boolean>;
 }
 

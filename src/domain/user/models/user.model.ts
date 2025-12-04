@@ -11,13 +11,3 @@ export class User {
     public role: Role,
   ) {}
 }
-
-export interface GetUsersParams {
-  skip?: number;
-  take?: number;
-}
-
-export interface UpdateUserParams {
-  id: UUID;
-  user: Partial<User>;
-}

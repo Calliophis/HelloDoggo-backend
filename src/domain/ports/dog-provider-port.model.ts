@@ -1,10 +1,13 @@
 import { Observable } from 'rxjs';
-import { Dog, GetDogParams } from '../dog/models/dog.model';
+import { Dog } from '../dog/models/dog.model';
 import { UUID } from 'crypto';
 import { UpdateDogDto } from '../dog/models/dto/update-dog.dto';
+import { PaginationDto } from '../models/dto/pagination.dto';
 
 export interface DogProviderI {
-  getDogs(params: GetDogParams): Observable<{ dogs: Dog[]; totalDogs: number }>;
+  getDogs(
+    params: PaginationDto,
+  ): Observable<{ dogs: Dog[]; totalDogs: number }>;
   getDogById(id: UUID): Observable<Dog | null>;
   createDog(dog: Partial<Dog>, image: Express.Multer.File): Observable<Dog>;
   updateDog(
