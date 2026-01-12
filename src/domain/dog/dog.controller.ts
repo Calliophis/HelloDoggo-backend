@@ -26,6 +26,7 @@ import { UUID } from 'crypto';
 import { catchError, Observable, tap } from 'rxjs';
 import { PaginationDto } from '../models/dto/pagination.dto';
 import { CreateDogDto } from './models/dto/create-dog.dto';
+import { UpdateDogDto } from './models/dto/update-dog.dto';
 
 @Controller('dog')
 export class DogController {
@@ -69,19 +70,13 @@ export class DogController {
   updateDog(
     @UploadedFile() image: Express.Multer.File,
     @Param('id') id: UUID,
-    @Body() dog: Partial<Dog>,
+    @Body() dog: UpdateDogDto,
   ): Observable<Dog> {
-    return this.dogService
-      .updateDog({
-        id,
-        dog,
-        image,
-      })
-      .pipe(
-        catchError(() => {
-          throw new UnauthorizedException('This operation is not allowed');
-        }),
-      );
+    return this.dogService.updateDog(id, dog, image).pipe(
+      catchError(() => {
+        throw new UnauthorizedException('This operation is not allowed');
+      }),
+    );
   }
 
   @UseGuards(RolesGuard)

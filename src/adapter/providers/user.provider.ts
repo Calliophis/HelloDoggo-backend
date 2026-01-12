@@ -4,18 +4,15 @@ import { forkJoin, from, map, Observable } from 'rxjs';
 import { UserFactory } from '../factories/user.factory';
 import { PrismaService } from '../database/prisma.service';
 import { UserProviderI } from '../../domain/ports/user-provider-port.model';
-import {
-  GetUsersParams,
-  UpdateUserParams,
-  User,
-} from '../../domain/user/models/user.model';
+import { User } from '../../domain/user/models/user.model';
+import { PaginationDto } from '../../domain/models/dto/pagination.dto';
 
 @Injectable()
 export class UserProvider implements UserProviderI {
   constructor(private prisma: PrismaService) {}
 
   getUsers(
-    params: GetUsersParams,
+    params: PaginationDto,
   ): Observable<{ users: User[]; totalUsers: number }> {
     const { skip, take } = params;
     return forkJoin([
@@ -77,8 +74,7 @@ export class UserProvider implements UserProviderI {
     );
   }
 
-  updateUser(params: UpdateUserParams): Observable<User> {
-    const { id, user } = params;
+  updateUser(id: UUID, user: Partial<User>): Observable<User> {
     const mappedData = UserFactory.mapFromUserToDatabase(user);
     return from(
       this.prisma.users.update({

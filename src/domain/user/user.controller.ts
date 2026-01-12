@@ -85,16 +85,11 @@ export class UserController {
   ): Observable<User> {
     const id: UUID = request.user.sub;
 
-    return this.userService
-      .updateUser({
-        id,
-        user: updatedUser,
-      })
-      .pipe(
-        catchError(() => {
-          throw new UnauthorizedException('This operation is not allowed');
-        }),
-      );
+    return this.userService.updateUser(id, updatedUser).pipe(
+      catchError(() => {
+        throw new UnauthorizedException('This operation is not allowed');
+      }),
+    );
   }
 
   @Roles(Role.ADMIN)
@@ -103,16 +98,11 @@ export class UserController {
     @Param('id') id: UUID,
     @Body() updatedUser: UpdateUserDto,
   ): Observable<User> {
-    return this.userService
-      .updateUser({
-        id,
-        user: updatedUser,
-      })
-      .pipe(
-        catchError(() => {
-          throw new UnauthorizedException('This operation is not allowed');
-        }),
-      );
+    return this.userService.updateUser(id, updatedUser).pipe(
+      catchError(() => {
+        throw new UnauthorizedException('This operation is not allowed');
+      }),
+    );
   }
 
   @Roles(Role.ADMIN, Role.EDITOR, Role.USER)

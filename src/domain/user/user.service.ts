@@ -2,8 +2,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { UserProviderI } from '../ports/user-provider-port.model';
 import { Observable, switchMap } from 'rxjs';
 import { UUID } from 'crypto';
-import { GetUsersParams, UpdateUserParams, User } from './models/user.model';
+import { User } from './models/user.model';
 import { PasswordService } from '../auth/password.service';
+import { PaginationDto } from '../models/dto/pagination.dto';
 
 @Injectable()
 export class UserService {
@@ -13,7 +14,7 @@ export class UserService {
   ) {}
 
   getUsers(
-    params: GetUsersParams,
+    params: PaginationDto,
   ): Observable<{ users: User[]; totalUsers: number }> {
     return this.userProvider.getUsers(params);
   }
@@ -30,20 +31,16 @@ export class UserService {
     return this.userProvider.createUser(user);
   }
 
-  updateUser(params: UpdateUserParams): Observable<User> {
-    const user = params.user;
+  updateUser(id: UUID, user: Partial<User>): Observable<User> {
     if (user.password) {
       return this.passwordService.hashPassword(user.password).pipe(
         switchMap((hash) => {
-          const updatedParams = {
-            ...params,
-            user: { ...user, password: hash },
-          };
-          return this.userProvider.updateUser(updatedParams);
+          user = { ...user, password: hash };
+          return this.userProvider.updateUser(id, user);
         }),
       );
     }
-    return this.userProvider.updateUser(params);
+    return this.userProvider.updateUser(id, user);
   }
 
   deleteUser(id: UUID): Observable<boolean> {
