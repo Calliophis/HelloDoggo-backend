@@ -18,6 +18,9 @@ export class UserProvider implements UserProviderI {
     return forkJoin([
       from(
         this.prisma.users.findMany({
+          orderBy: {
+            created_at: 'desc',
+          },
           skip,
           take,
         }),
