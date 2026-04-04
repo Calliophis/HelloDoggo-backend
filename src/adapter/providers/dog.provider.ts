@@ -31,6 +31,9 @@ export class DogProvider implements DogProviderI {
     return forkJoin([
       from(
         this.prisma.dogs.findMany({
+          orderBy: {
+            created_at: 'desc',
+          },
           skip,
           take,
         }),
