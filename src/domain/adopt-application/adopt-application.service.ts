@@ -1,7 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { AdoptApplicationProviderI } from '../ports/adopt-application-provider-port.model';
 import { PaginationDto } from '../models/dto/pagination.dto';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { AdoptApplication } from './models/adopt-application.model';
 import { UUID } from 'crypto';
 import { CreateAdoptApplicationDto } from './models/dto/create-adopt-application.dto';
@@ -55,10 +55,21 @@ export class AdoptApplicationService {
     adoptApplication: CreateAdoptApplicationDto,
     userId: UUID,
   ): Observable<AdoptApplication> {
-    return this.adoptApplicationProvider.createAdoptApplication(
-      adoptApplication,
-      userId,
-    );
+    return this.adoptApplicationProvider
+      .getAdoptApplicationByDogIdAndUserId(adoptApplication.dogId, userId)
+      .pipe(
+        switchMap((existingApplication) => {
+          if (existingApplication) {
+            throw new ConflictException(
+              'You have already applied for this dog!',
+            );
+          }
+          return this.adoptApplicationProvider.createAdoptApplication(
+            adoptApplication,
+            userId,
+          );
+        }),
+      );
   }
 
   updateAdoptApplicationStatus(

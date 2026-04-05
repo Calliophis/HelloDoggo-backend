@@ -53,6 +53,24 @@ export class AdoptApplicationProvider implements AdoptApplicationProviderI {
   }> {
     return this.fetchAdoptApplications(params, { user_id: userId });
   }
+  getAdoptApplicationByDogIdAndUserId(
+    dogId: UUID,
+    userId: UUID,
+  ): Observable<AdoptApplication | null> {
+    return from(
+      this.prisma.adoption_applications.findFirst({
+        where: { dog_id: dogId, user_id: userId },
+      }),
+    ).pipe(
+      map((databaseAdoptApplication) => {
+        return databaseAdoptApplication
+          ? AdoptApplicationFactory.createFromDatabaseToAdoptApplication(
+              databaseAdoptApplication,
+            )
+          : null;
+      }),
+    );
+  }
   createAdoptApplication(
     adoptApplication: CreateAdoptApplicationDto,
     userId: UUID,

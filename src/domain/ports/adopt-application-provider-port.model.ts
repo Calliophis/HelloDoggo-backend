@@ -25,6 +25,10 @@ export interface AdoptApplicationProviderI {
     adoptApplications: AdoptApplication[];
     totalAdoptApplications: number;
   }>;
+  getAdoptApplicationByDogIdAndUserId(
+    dogId: UUID,
+    userId: UUID,
+  ): Observable<AdoptApplication | null>;
   createAdoptApplication(
     adoptApplication: CreateAdoptApplicationDto,
     userId: UUID,

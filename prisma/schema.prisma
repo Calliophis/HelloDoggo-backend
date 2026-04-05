@@ -38,4 +38,6 @@ model adoption_applications {
   status     String   @default("pending")
   dogs       dogs     @relation(fields: [dog_id], references: [id], onDelete: Cascade)
   users      users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([dog_id, user_id], map: "unique_dog_user")
 }
