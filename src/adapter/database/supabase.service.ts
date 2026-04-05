@@ -42,9 +42,10 @@ export class SupabaseService {
   }
 
   deleteFile(imgUrl: string): Observable<boolean> {
-    const filePath = imgUrl.split(
-      this.configService.get<string>('SUPABASE_STORAGE_URL') || '',
-    )[1];
+    const filePath = imgUrl.split('/').pop();
+    if (!filePath) {
+      return from([true]);
+    }
     return from(this.supabase.storage.from('dogs').remove([filePath])).pipe(
       map(() => true),
       catchError((error: StorageError) => {

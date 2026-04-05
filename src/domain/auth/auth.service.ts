@@ -5,7 +5,7 @@ import { Request } from 'express';
 import { Role } from './enums/role.enum';
 import { UserService } from '../user/user.service';
 import { UUID } from 'crypto';
-import { from, map, Observable, switchMap } from 'rxjs';
+import { from, map, Observable, switchMap, throwError } from 'rxjs';
 import { User } from '../user/models/user.model';
 import { PasswordService } from './password.service';
 
@@ -88,7 +88,7 @@ export class AuthService {
   verifyJwtUser(request: Request): Observable<TokenPayload> {
     const token = this.extractTokenFromHeader(request);
     if (!token) {
-      throw new Error('No token');
+      return throwError(() => new Error('No token'));
     }
     return from(this.jwtService.verifyAsync<TokenPayload>(token)).pipe(
       map((payload) => {
