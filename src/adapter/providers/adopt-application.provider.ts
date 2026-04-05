@@ -55,12 +55,13 @@ export class AdoptApplicationProvider implements AdoptApplicationProviderI {
   }
   createAdoptApplication(
     adoptApplication: CreateAdoptApplicationDto,
+    userId: UUID,
   ): Observable<AdoptApplication> {
     return from(
       this.prisma.adoption_applications.create({
         data: AdoptApplicationFactory.mapCreateToDatabase(
           adoptApplication.dogId,
-          adoptApplication.userId,
+          userId,
         ),
       }),
     ).pipe(
@@ -94,6 +95,14 @@ export class AdoptApplicationProvider implements AdoptApplicationProviderI {
         where: { id },
       }),
     ).pipe(map(() => true));
+  }
+
+  deleteOwnAdoptApplication(id: UUID, userId: UUID): Observable<boolean> {
+    return from(
+      this.prisma.adoption_applications.deleteMany({
+        where: { id, user_id: userId },
+      }),
+    ).pipe(map((batchPayload) => batchPayload.count > 0));
   }
 
   private fetchAdoptApplications(

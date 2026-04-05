@@ -1,3 +1,7 @@
+import { IsEnum } from 'class-validator';
+import { Status } from '../../enums/status.enum';
+
 export class UpdateAdoptApplicationStatusDto {
-  constructor(public status: 'pending' | 'approved' | 'rejected') {}
+  @IsEnum(Status)
+  status: Status;
 }

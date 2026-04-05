@@ -27,12 +27,14 @@ export interface AdoptApplicationProviderI {
   }>;
   createAdoptApplication(
     adoptApplication: CreateAdoptApplicationDto,
+    userId: UUID,
   ): Observable<AdoptApplication>;
   updateAdoptApplicationStatus(
     id: UUID,
     status: UpdateAdoptApplicationStatusDto,
   ): Observable<AdoptApplication>;
   deleteAdoptApplication(id: UUID): Observable<boolean>;
+  deleteOwnAdoptApplication(id: UUID, userId: UUID): Observable<boolean>;
 }
 
 export const AdoptApplicationProviderI = Symbol('AdoptApplicationProviderI');

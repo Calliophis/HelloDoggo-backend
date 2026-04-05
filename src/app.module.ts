@@ -14,6 +14,10 @@ import { DogProvider } from './adapter/providers/dog.provider';
 import { PrismaService } from './adapter/database/prisma.service';
 import { SupabaseService } from './adapter/database/supabase.service';
 import { PasswordService } from './domain/auth/password.service';
+import { AdoptApplicationService } from './domain/adopt-application/adopt-application.service';
+import { AdoptApplicationController } from './domain/adopt-application/adopt-application.controller';
+import { AdoptApplicationProviderI } from './domain/ports/adopt-application-provider-port.model';
+import { AdoptApplicationProvider } from './adapter/providers/adopt-application.provider';
 
 @Module({
   imports: [
@@ -23,7 +27,12 @@ import { PasswordService } from './domain/auth/password.service';
     }),
     AuthModule,
   ],
-  controllers: [AppController, DogController, UserController],
+  controllers: [
+    AppController,
+    DogController,
+    UserController,
+    AdoptApplicationController,
+  ],
   providers: [
     AppService,
     UserService,
@@ -31,6 +40,7 @@ import { PasswordService } from './domain/auth/password.service';
     PrismaService,
     SupabaseService,
     PasswordService,
+    AdoptApplicationService,
     {
       provide: UserProviderI,
       useClass: UserProvider,
@@ -38,6 +48,10 @@ import { PasswordService } from './domain/auth/password.service';
     {
       provide: DogProviderI,
       useClass: DogProvider,
+    },
+    {
+      provide: AdoptApplicationProviderI,
+      useClass: AdoptApplicationProvider,
     },
   ],
 })
