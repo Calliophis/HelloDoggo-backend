@@ -10,13 +10,29 @@ export type DatabaseAdoptApplication = PrismaAdoptionApplications;
 
 export class AdoptApplicationFactory {
   static createFromDatabaseToAdoptApplication(
-    databaseAdoptApplication: DatabaseAdoptApplication,
+    db: DatabaseAdoptApplication & {
+      dogs: { id: string; name: string };
+      users: {
+        id: string;
+        first_name: string;
+        last_name: string;
+        email: string;
+      };
+    },
   ): AdoptApplication {
     return new AdoptApplication(
-      databaseAdoptApplication.id as UUID,
-      databaseAdoptApplication.dog_id as UUID,
-      databaseAdoptApplication.user_id as UUID,
-      this.mapDatabaseStatus(databaseAdoptApplication.status),
+      db.id as UUID,
+      {
+        id: db.dogs.id as UUID,
+        name: db.dogs.name,
+      },
+      {
+        id: db.users.id as UUID,
+        firstName: db.users.first_name,
+        lastName: db.users.last_name,
+        email: db.users.email,
+      },
+      this.mapDatabaseStatus(db.status),
     );
   }
 

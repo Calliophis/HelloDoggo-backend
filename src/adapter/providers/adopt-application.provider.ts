@@ -24,6 +24,10 @@ export class AdoptApplicationProvider implements AdoptApplicationProviderI {
     return from(
       this.prisma.adoption_applications.findUnique({
         where: { id },
+        include: {
+          dogs: true,
+          users: true,
+        },
       }),
     ).pipe(
       map((databaseAdoptApplication) => {
@@ -60,6 +64,10 @@ export class AdoptApplicationProvider implements AdoptApplicationProviderI {
     return from(
       this.prisma.adoption_applications.findFirst({
         where: { dog_id: dogId, user_id: userId },
+        include: {
+          dogs: true,
+          users: true,
+        },
       }),
     ).pipe(
       map((databaseAdoptApplication) => {
@@ -81,6 +89,10 @@ export class AdoptApplicationProvider implements AdoptApplicationProviderI {
           adoptApplication.dogId,
           userId,
         ),
+        include: {
+          dogs: true,
+          users: true,
+        },
       }),
     ).pipe(
       map((databaseAdoptApplication) =>
@@ -98,6 +110,10 @@ export class AdoptApplicationProvider implements AdoptApplicationProviderI {
       this.prisma.adoption_applications.update({
         where: { id },
         data: AdoptApplicationFactory.mapUpdateStatusToDatabase(status),
+        include: {
+          dogs: true,
+          users: true,
+        },
       }),
     ).pipe(
       map((databaseAdoptApplication) =>
@@ -137,6 +153,10 @@ export class AdoptApplicationProvider implements AdoptApplicationProviderI {
         this.prisma.adoption_applications.findMany({
           where,
           orderBy: [{ created_at: 'desc' }, { id: 'asc' }],
+          include: {
+            dogs: true,
+            users: true,
+          },
           skip,
           take,
         }),
