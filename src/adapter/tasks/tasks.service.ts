@@ -14,7 +14,7 @@ export class TasksService {
     private adoptApplicationProvider: AdoptApplicationProviderI,
   ) {}
 
-  @Cron('15 * * * * *')
+  @Cron('15 0 1 * * 1')
   createAdoptionApplication() {
     this.adoptApplicationProvider
       .createAdoptApplication(
@@ -34,7 +34,7 @@ export class TasksService {
       });
   }
 
-  @Cron('30 * * * * *')
+  @Cron('30 0 1 * * 1')
   updateAdoptionApplication() {
     if (this.applicationId) {
       this.adoptApplicationProvider
@@ -54,7 +54,7 @@ export class TasksService {
     }
   }
 
-  @Cron('45 * * * * *')
+  @Cron('45 0 1 * * 1')
   deleteAdoptionApplication() {
     if (this.applicationId) {
       this.adoptApplicationProvider
