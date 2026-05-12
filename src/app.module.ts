@@ -18,6 +18,8 @@ import { AdoptApplicationService } from './domain/adopt-application/adopt-applic
 import { AdoptApplicationController } from './domain/adopt-application/adopt-application.controller';
 import { AdoptApplicationProviderI } from './domain/ports/adopt-application-provider-port.model';
 import { AdoptApplicationProvider } from './adapter/providers/adopt-application.provider';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TasksService } from './adapter/tasks/tasks.service';
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import { AdoptApplicationProvider } from './adapter/providers/adopt-application.
       envFilePath: '.env',
     }),
     AuthModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [
     AppController,
@@ -53,6 +56,7 @@ import { AdoptApplicationProvider } from './adapter/providers/adopt-application.
       provide: AdoptApplicationProviderI,
       useClass: AdoptApplicationProvider,
     },
+    TasksService,
   ],
 })
 export class AppModule {}
